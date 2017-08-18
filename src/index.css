@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 100%;
+  position:absolute;
+  bottom:0;
+                top:0;
+                right:0;
+                left:0;
+}
+
+.main {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.display {
+  flex: 1;
+  display: flex;
+}
