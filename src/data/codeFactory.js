@@ -24,7 +24,6 @@ codeFactory.resetCode = function (name) {
 }
 
 codeFactory.getRunCode = function (name, replaces, prefix) {
-    console.log(arguments)
   var result = code[name];
 
   for (var i = 0; i < replaces.length; i++) {

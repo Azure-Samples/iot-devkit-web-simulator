@@ -1,0 +1,546 @@
+$font-stack: 'Segoe UI',
+Tahoma,
+Geneva,
+Verdana,
+sans-serif;
+$color-text-light: #bbbbbb;
+$color-text-dark: #333333;
+$break-small: 768px;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+
+#root {
+    height: 100%;
+}
+
+.main {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    .banner {
+        width: 100%;
+        height: 48px;
+        background: #2b2b2b;
+        padding: 8px 0;
+        border-bottom: solid;
+        border-bottom-width: 1px;
+        border-bottom-color: #bd4d28;
+        img {
+            margin: 0 8px 0 24px;
+            /*width: 48px;*/
+            height: 28px;
+            vertical-align: middle;
+        }
+        span {
+            vertical-align: middle;
+            font-size: 15px;
+            color: #fdfdfd;
+        }
+        .help {
+            float: right;
+            line-height: 28px;
+            margin-right: 40px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            &:hover {
+                color: grey;
+            }
+            &:visited {
+                color: white;
+            }
+        }
+    }
+    .main-container {
+        flex: 1;
+        display: flex;
+        .canvas-container {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .controlBar {
+            background-color: #dfdfdf;
+            border-bottom: solid;
+            border-bottom-color: #ababab;
+            border-bottom-width: 1px;
+            width: 100%;
+            height: 24px;
+            line-height: 24px;
+            padding-left: 18px;
+            span {
+                margin-right: 6px;
+                padding: 0 6px;
+                min-height: 24px;
+                font-size: 12px;
+                color: #2b2b2b;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.display {
+    flex: 1;
+    display: flex;
+}
+
+.right-container {
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: -moz-flex;
+    flex-flow: column;
+    div.react-console-container {
+        min-width: 100%;
+        /*background: #4b4b4b;
+}
+
+div.react-console-prompt-box {
+	color: #fdfdfd;
+}
+
+span.react-console-prompt-label {
+	color: #4bfd2b;
+}
+
+div.react-console-focus span.react-console-cursor {
+	background: #efefef;
+	color: #2b2b2b;
+}
+
+div.react-console-nofocus span.react-console-cursor {
+	color: #fdfdfd;
+	outline: 0.1em solid #efefef;
+}
+
+@keyframes react-console-cursor-animation {
+	0% {
+		background: #efefef;
+		color: #2b2b2b;
+	}
+	50% {
+		background: #efefef;
+		color: #2b2b2b;
+	}
+	51% {
+		background: none;
+		color: #fdfdfd;
+	}
+	100% {
+		background: none;
+		color: #fdfdfd;
+	}
+}
+
+div.react-console-message {
+	color: #ababab;*/
+    }
+    .hideConsole {
+        display: none;
+    }
+    @media (min-width: 769px) {
+        .showConsole {
+            flex: 1;
+        }
+        .hideConsole {
+            flex: 0;
+        }
+    }
+    @media (max-width: 768px) {
+        .showConsole {
+            height: 240px;
+        }
+    }
+}
+
+@media (min-width: 769px) {
+    .left-container {
+        flex: 6;
+    }
+    .right-container {
+        overflow: hidden;
+        margin: 0 0px;
+        height: 100%;
+        flex: 7;
+    }
+}
+
+@media (max-width: 768px) {
+    .left-container,
+    .right-container {
+        width: 98%;
+        margin: 0 auto;
+    }
+}
+
+.codeEditor {
+    width: 100%;
+    flex: 1;
+}
+
+.tabBar {
+    width: 100%;
+    display: -moz-box;
+    display: -webkit-flexbox;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    background-color: #323327;
+    color: #CCCCCC;
+    padding: 0 47px;
+}
+
+.tabBar .onActive {
+    background-color: #272822;
+    color: #F8F8F2;
+}
+
+.tabBar {
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.codeTab {
+    height: 30px;
+    line-height: 30px;
+    -moz-box-flex: 1;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.ace_gutter,
+.ace_scroller {
+    padding-top: 8px;
+}
+
+.ace_gutter-active-line {
+    margin-top: 8px;
+}
+
+.ace_scrollbar {
+    display: none;
+}
+
+.ace_editor:hover .ace_scrollbar {
+    display: block;
+}
+
+.codeEditorTitle {
+    color: #8b8b8b;
+    font-weight: bold;
+    margin: 4px auto;
+    display: none;
+}
+
+@media (min-width: 769px) {
+    .codeEditorLong,
+    .codeEditorShort {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .codeEditorTitle {
+        display: block;
+    }
+    .codeEditorLong {
+        height: 1024px;
+    }
+    .codeEditorShort {
+        height: 640px;
+    }
+}
+
+.editor {
+    width: 100%;
+}
+
+.overlay {
+    position: fixed;
+    /* Sit on top of the page content */
+    display: none;
+    /* Hidden by default */
+    width: 100%;
+    /* Full width (cover the whole page) */
+    height: 100%;
+    /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Black background with opacity */
+    z-index: 5;
+    /* Specify a stack order in case you're using a different order for other elements */
+    justify-content: space-between;
+    align-items: center;
+    .instruction {
+        width: 50%;
+        height: 60%;
+        min-height: 400px;
+        @media screen and (max-width: 768px) {
+            width: 90%;
+            height: 90%;
+        }
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        .header-bar {
+            background-color: black;
+            @media screen and (max-width: 768px) {
+                background-color: white;
+            }
+            flex: 1;
+            display: flex;
+            .step-container {
+                flex: 6;
+                display: flex;
+                @media screen and (max-width: 768px) {
+                    visibility: hidden;
+                }
+                .step {
+                    flex: 1;
+                    cursor: pointer;
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    div {
+                        display: inline-block;
+                    }
+                    .step-circle {
+                        width: 30px;
+                        height: 30px;
+                        border: 2px solid white;
+                        border-radius: 100%;
+                        background: black;
+                        margin: 0 10px;
+                    }
+                    .step-circle-chosen {
+                        width: 16px;
+                        height: 16px;
+                        margin-left: -33px;
+                        border-radius: 100%;
+                        background: white;
+                    }
+                    .step-label {
+                        vertical-align: middle;
+                        color: white;
+                        font-family: $font-stack;
+                        font-size: 15px;
+                        line-height: 20px;
+                        margin-left: 17px;
+                    }
+                }
+            }
+            .close-button {
+                flex: 1;
+                font-size: 25px;
+                text-align: center;
+                align-self: center; // padding-right: 20px;
+                color: white;
+                @media screen and (max-width: 768px) {
+                    color: black;
+                }
+                cursor: pointer;
+                &:hover {
+                    color: grey;
+                }
+            }
+        }
+        .content {
+            flex: 10;
+            display: flex;
+            @media screen and (max-width: 768px) {
+                flex-direction: column;
+                flex: 20;
+            }
+            .text-instruction {
+                flex: 5;
+                @media screen and (max-width: 768px) {
+                    flex: 9;
+                    order: 2;
+                }
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                padding-right: 30px;
+                padding-left: 30px;
+                .text-instruction-title {
+                    flex: 2;
+                    margin-top: 70px;
+                    @media screen and (max-width: 768px) {
+                        margin-top: 0;
+                    }
+                    font-family: $font-stack;
+                    font-weight: normal;
+                    color: $color-text-dark;
+                    line-height: 27px;
+                    font-size: 20px;
+                }
+                .text-instruction-description {
+                    flex: 3;
+                    overflow: hidden;
+                    display: flex;
+                    .paragraph-container {
+                        flex: 40;
+                        .paragraph {
+                            transition: 0.5s all ease;
+                            font-weight: 400;
+                            font-family: $font-stack;
+                            color: $color-text-light;
+                            font-size: 15px;
+                            line-height: 20px;
+                            padding-bottom: 10px;
+                        }
+                        .paragraph-selected {
+                            color: $color-text-dark;
+                        }
+                    }
+                    .paragraph-scrollbar {
+                        flex: 1;
+                        margin-left: 10px;
+                        height: 100%;
+                        border-radius: 5px;
+                        background-color: #cccdce;
+                        .scrollbar-indicator {
+                            border-radius: 5px;
+                            transition: 0.5s all ease;
+                            background-color: #cccdce;
+                        }
+                        .scrollbar-indicator-selected {
+                            background-color: grey;
+                        }
+                    }
+                }
+                .operation {
+                    flex: 1;
+                    font-family: $font-stack;
+                    font-size: 15px;
+                    line-height: 20px;
+                    margin-top: 10px;
+                    .operation-button-1 {
+                        display: inline-block;
+                        background-color: white;
+                        color: black;
+                        border: 1px solid #cccdce;
+                        padding: 4px 30px;
+                        margin: 0 10px 0 0;
+                        cursor: pointer;
+                        &:hover {
+                            background-color: #cccdce;
+                        }
+                    }
+                    .operation-button-2 {
+                        display: inline-block;
+                        padding: 4px 30px;
+                        background-color: #0078d7;
+                        color: white;
+                        cursor: pointer;
+                        &:hover {
+                            background-color: #0063b1;
+                        }
+                    }
+                }
+                .link-container {
+                    flex: 1;
+                    a {
+                        padding-right: 10px;
+                        font-size: 12px;
+                         :visited {
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+            .picture-instruction {
+                flex: 6;
+                align-self: center;
+                padding-right: 30px;
+                @media screen and (max-width: 768px) {
+                    padding-right: 10px;
+                    padding-left: 10px;
+                }
+                .picture-container {
+                    margin-top: 10px;
+                    @media screen and (max-width: 768px) {
+                        margin-top: 0;
+                    }
+                    overflow: hidden;
+                    display: flex;
+                    .picture {
+                        transition: 0.5s all ease;
+                        width: 100%;
+                        min-width: 100%;
+                        height: 100%;
+                        margin-bottom: 20px;
+                    }
+                }
+                .picture-indicator-container {
+                    margin-top: 20px;
+                    @media screen and (max-width: 768px) {
+                        margin-top: 0;
+                    }
+                    text-align: center;
+                    .picture-indicator {
+                        display: inline-block;
+                        margin: 0 10px;
+                        width: 9px;
+                        height: 9px;
+                        border-radius: 100%;
+                        background: #cccdce;
+                        transition: 0.5s all ease;
+                        cursor: pointer;
+                    }
+                    .picture-indicator-selected {
+                        background-color: #0078d7;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.element-none {
+    display: none !important;
+}
+
+.element-hide {
+    visibility: hidden !important;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.placeholder-1 {
+    flex: 1;
+}
+
+.placeholder-2 {
+    flex: 2;
+}

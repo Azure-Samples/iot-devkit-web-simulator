@@ -1,305 +1,305 @@
-$font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-$color-text-light: #bbbbbb;
-$color-text-dark: #333333;
-$break-small: 768px;
-// $mobile-phone: "screen and (max-width : 768px)";
+// $font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+// $color-text-light: #bbbbbb;
+// $color-text-dark: #333333;
+// $break-small: 768px;
+// // $mobile-phone: "screen and (max-width : 768px)";
 
-.overlay {
-    position: fixed; /* Sit on top of the page content */
-    display: none; /* Hidden by default */
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
-    top: 0; 
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-    z-index: 5; /* Specify a stack order in case you're using a different order for other elements */
-    justify-content: space-between;
-    align-items: center;
+// .overlay {
+//     position: fixed; /* Sit on top of the page content */
+//     display: none; /* Hidden by default */
+//     width: 100%; /* Full width (cover the whole page) */
+//     height: 100%; /* Full height (cover the whole page) */
+//     top: 0; 
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+//     z-index: 5; /* Specify a stack order in case you're using a different order for other elements */
+//     justify-content: space-between;
+//     align-items: center;
 
-    .instruction {
-        width: 50%;
-        height: 60%;
-        min-height: 400px;
-        @media screen and (max-width : 768px) {
-            width: 90%;
-            height: 90%;
-        }
-        margin: auto;
-        display: flex;
-        flex-direction: column;
+//     .instruction {
+//         width: 50%;
+//         height: 60%;
+//         min-height: 400px;
+//         @media screen and (max-width : 768px) {
+//             width: 90%;
+//             height: 90%;
+//         }
+//         margin: auto;
+//         display: flex;
+//         flex-direction: column;
         
-        background-color: white; 
+//         background-color: white; 
 
-        .header-bar {
-            background-color: black;
-            @media screen and (max-width : 768px) {
-                background-color: white;
-            }
-            flex: 1;
-            display: flex;
+//         .header-bar {
+//             background-color: black;
+//             @media screen and (max-width : 768px) {
+//                 background-color: white;
+//             }
+//             flex: 1;
+//             display: flex;
 
-            .step-container {
-                flex: 6;
-                display: flex;
-                @media screen and (max-width : 768px) {
-                    visibility: hidden;
-                }
+//             .step-container {
+//                 flex: 6;
+//                 display: flex;
+//                 @media screen and (max-width : 768px) {
+//                     visibility: hidden;
+//                 }
 
-                .step {
-                    flex: 1;
-                    cursor: pointer;
-                    position: relative;
-                    display: flex;
-                    align-items: center;
+//                 .step {
+//                     flex: 1;
+//                     cursor: pointer;
+//                     position: relative;
+//                     display: flex;
+//                     align-items: center;
 
-                    div {
-                        display: inline-block;
-                    }
+//                     div {
+//                         display: inline-block;
+//                     }
 
-                    .step-circle {
-                        width: 30px;
-                        height: 30px;
-                        border: 2px solid white;
-                        border-radius: 100%;
-                        background: black;
-                        margin: 0 10px;
-                    }
+//                     .step-circle {
+//                         width: 30px;
+//                         height: 30px;
+//                         border: 2px solid white;
+//                         border-radius: 100%;
+//                         background: black;
+//                         margin: 0 10px;
+//                     }
 
-                    .step-circle-chosen {
-                        width: 16px;
-                        height: 16px;
-                        margin-left: -33px;
-                        border-radius: 100%;
-                        background: white;
-                    }
+//                     .step-circle-chosen {
+//                         width: 16px;
+//                         height: 16px;
+//                         margin-left: -33px;
+//                         border-radius: 100%;
+//                         background: white;
+//                     }
 
-                    .step-label {
-                        vertical-align: middle;
-                        color: white;
-                        font-family: $font-stack;
-                        font-size: 15px;
-                        line-height: 20px;
-                        margin-left: 17px;
-                    }
-                }
-            }
+//                     .step-label {
+//                         vertical-align: middle;
+//                         color: white;
+//                         font-family: $font-stack;
+//                         font-size: 15px;
+//                         line-height: 20px;
+//                         margin-left: 17px;
+//                     }
+//                 }
+//             }
 
-            .close-button {
-                flex: 1;
-                font-size: 25px;
-                text-align: center;
-                align-self: center;
-                // padding-right: 20px;
-                color: white;
-                @media screen and (max-width : 768px) {
-                    color: black;
-                }
-                cursor: pointer;
+//             .close-button {
+//                 flex: 1;
+//                 font-size: 25px;
+//                 text-align: center;
+//                 align-self: center;
+//                 // padding-right: 20px;
+//                 color: white;
+//                 @media screen and (max-width : 768px) {
+//                     color: black;
+//                 }
+//                 cursor: pointer;
 
-                &:hover {
-                    color: grey;
-                }
-            }
-        }
+//                 &:hover {
+//                     color: grey;
+//                 }
+//             }
+//         }
 
-        .content {
-            flex: 10;
-            display: flex;
-            @media screen and (max-width : 768px) {
-                flex-direction: column;
-                flex: 20;
-            }
+//         .content {
+//             flex: 10;
+//             display: flex;
+//             @media screen and (max-width : 768px) {
+//                 flex-direction: column;
+//                 flex: 20;
+//             }
 
-            .text-instruction {
-                flex: 5;
-                @media screen and (max-width : 768px) {
-                    flex: 9;
-                    order: 2;
-                }
-                display: flex;
-                flex-direction: column;
-                justify-content: space-around;
-                padding-right: 30px;
-                padding-left: 30px;
+//             .text-instruction {
+//                 flex: 5;
+//                 @media screen and (max-width : 768px) {
+//                     flex: 9;
+//                     order: 2;
+//                 }
+//                 display: flex;
+//                 flex-direction: column;
+//                 justify-content: space-around;
+//                 padding-right: 30px;
+//                 padding-left: 30px;
 
-                .text-instruction-title {
-                    flex: 2;
-                    margin-top: 70px;
-                    @media screen and (max-width : 768px) {
-                        margin-top: 0;
-                    }
-                    font-family: $font-stack;
-                    font-weight: normal;
-                    color: $color-text-dark;
-                    line-height: 27px;
-                    font-size: 20px;
-                }
+//                 .text-instruction-title {
+//                     flex: 2;
+//                     margin-top: 70px;
+//                     @media screen and (max-width : 768px) {
+//                         margin-top: 0;
+//                     }
+//                     font-family: $font-stack;
+//                     font-weight: normal;
+//                     color: $color-text-dark;
+//                     line-height: 27px;
+//                     font-size: 20px;
+//                 }
 
-                .text-instruction-description {
-                    flex: 3;
-                    overflow: hidden;
-                    display: flex;
+//                 .text-instruction-description {
+//                     flex: 3;
+//                     overflow: hidden;
+//                     display: flex;
 
-                    .paragraph-container {
-                        flex: 40;
+//                     .paragraph-container {
+//                         flex: 40;
 
-                        .paragraph {
-                            transition: 0.5s all ease;
-                            font-weight: 400;
-                            font-family: $font-stack;
-                            color: $color-text-light;
-                            font-size: 15px;
-                            line-height: 20px;
-                            padding-bottom: 10px;
-                        }
+//                         .paragraph {
+//                             transition: 0.5s all ease;
+//                             font-weight: 400;
+//                             font-family: $font-stack;
+//                             color: $color-text-light;
+//                             font-size: 15px;
+//                             line-height: 20px;
+//                             padding-bottom: 10px;
+//                         }
 
-                        .paragraph-selected {
-                            color: $color-text-dark;
-                        }
-                    }
+//                         .paragraph-selected {
+//                             color: $color-text-dark;
+//                         }
+//                     }
 
-                    .paragraph-scrollbar {
-                        flex: 1;
-                        margin-left: 10px;
-                        height: 100%;
-                        border-radius: 5px;
-                        background-color: #cccdce;
+//                     .paragraph-scrollbar {
+//                         flex: 1;
+//                         margin-left: 10px;
+//                         height: 100%;
+//                         border-radius: 5px;
+//                         background-color: #cccdce;
 
-                        .scrollbar-indicator {
-                            border-radius: 5px;
-                            transition: 0.5s all ease;
-                            background-color: #cccdce;
-                        }
+//                         .scrollbar-indicator {
+//                             border-radius: 5px;
+//                             transition: 0.5s all ease;
+//                             background-color: #cccdce;
+//                         }
 
-                        .scrollbar-indicator-selected {
-                            background-color: grey;
-                        }
-                    }
-                }
+//                         .scrollbar-indicator-selected {
+//                             background-color: grey;
+//                         }
+//                     }
+//                 }
 
-                .operation {
-                    flex: 1;
-                    font-family: $font-stack;
-                    font-size: 15px;
-                    line-height: 20px;
-                    margin-top: 10px;
+//                 .operation {
+//                     flex: 1;
+//                     font-family: $font-stack;
+//                     font-size: 15px;
+//                     line-height: 20px;
+//                     margin-top: 10px;
 
-                    .operation-button-1 {
-                        display: inline-block;
-                        background-color: white;
-                        color: black;
-                        border: 1px solid #cccdce;
-                        padding: 4px 30px;
-                        margin: 0 10px 0 0;
-                        cursor: pointer;
+//                     .operation-button-1 {
+//                         display: inline-block;
+//                         background-color: white;
+//                         color: black;
+//                         border: 1px solid #cccdce;
+//                         padding: 4px 30px;
+//                         margin: 0 10px 0 0;
+//                         cursor: pointer;
 
-                        &:hover {
-                            background-color: #cccdce;
-                        }
-                    }
+//                         &:hover {
+//                             background-color: #cccdce;
+//                         }
+//                     }
 
-                    .operation-button-2 {
-                        display: inline-block;
-                        padding: 4px 30px;
-                        background-color: #0078d7;
-                        color: white;
-                        cursor: pointer;
+//                     .operation-button-2 {
+//                         display: inline-block;
+//                         padding: 4px 30px;
+//                         background-color: #0078d7;
+//                         color: white;
+//                         cursor: pointer;
 
-                        &:hover {
-                            background-color: #0063b1;
-                        }
-                    }
-                }
+//                         &:hover {
+//                             background-color: #0063b1;
+//                         }
+//                     }
+//                 }
 
-                .link-container {
-                    flex: 1;
+//                 .link-container {
+//                     flex: 1;
 
-                    a {
-                        padding-right: 10px;
-                        font-size: 12px;
+//                     a {
+//                         padding-right: 10px;
+//                         font-size: 12px;
 
-                        :visited {
-                            text-decoration: none;
-                        }
-                    }
-                }
-            }
+//                         :visited {
+//                             text-decoration: none;
+//                         }
+//                     }
+//                 }
+//             }
 
             
 
-            .picture-instruction {
-                flex: 6;
-                align-self: center;
-                padding-right: 30px;
-                @media screen and (max-width : 768px) {
-                    padding-right: 10px;
-                    padding-left: 10px;
-                }
+//             .picture-instruction {
+//                 flex: 6;
+//                 align-self: center;
+//                 padding-right: 30px;
+//                 @media screen and (max-width : 768px) {
+//                     padding-right: 10px;
+//                     padding-left: 10px;
+//                 }
 
-                .picture-container {
-                    margin-top: 10px;
-                    @media screen and (max-width : 768px) {
-                        margin-top: 0;
-                    }
-                    overflow: hidden;
-                    display: flex;
+//                 .picture-container {
+//                     margin-top: 10px;
+//                     @media screen and (max-width : 768px) {
+//                         margin-top: 0;
+//                     }
+//                     overflow: hidden;
+//                     display: flex;
 
-                    .picture {
-                        transition: 0.5s all ease;
-                        width: 100%;
-                        min-width: 100%;
-                        height: 100%;
-                        margin-bottom: 20px;
-                    }
-                }
+//                     .picture {
+//                         transition: 0.5s all ease;
+//                         width: 100%;
+//                         min-width: 100%;
+//                         height: 100%;
+//                         margin-bottom: 20px;
+//                     }
+//                 }
 
-                .picture-indicator-container {
-                    margin-top: 20px;
-                    @media screen and (max-width : 768px) {
-                        margin-top: 0;
-                    }
-                    text-align: center;
+//                 .picture-indicator-container {
+//                     margin-top: 20px;
+//                     @media screen and (max-width : 768px) {
+//                         margin-top: 0;
+//                     }
+//                     text-align: center;
 
-                    .picture-indicator {
-                        display: inline-block;
-                        margin: 0 10px;
-                        width: 9px;
-                        height: 9px;
-                        border-radius: 100%;
-                        background: #cccdce;
-                        transition: 0.5s all ease;
-                        cursor: pointer;
-                    }
+//                     .picture-indicator {
+//                         display: inline-block;
+//                         margin: 0 10px;
+//                         width: 9px;
+//                         height: 9px;
+//                         border-radius: 100%;
+//                         background: #cccdce;
+//                         transition: 0.5s all ease;
+//                         cursor: pointer;
+//                     }
 
-                    .picture-indicator-selected {
-                        background-color: #0078d7;
-                    }
-                }
-            }
-        }
-    }
-}
+//                     .picture-indicator-selected {
+//                         background-color: #0078d7;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
 
 
 
-.element-none {
-    display: none !important;
-}
+// .element-none {
+//     display: none !important;
+// }
 
-.element-hide {
-    visibility: hidden !important;
-}
+// .element-hide {
+//     visibility: hidden !important;
+// }
 
-.bold {
-    font-weight: 600;
-}
+// .bold {
+//     font-weight: 600;
+// }
 
-.placeholder-1 {
-    flex: 1;
-}
+// .placeholder-1 {
+//     flex: 1;
+// }
 
-.placeholder-2 {
-    flex: 2;
-}
+// .placeholder-2 {
+//     flex: 2;
+// }

@@ -127,7 +127,7 @@ async function setup() {
     });
 }
 function DoIdle() {
-    if (buttonA.state.switch) {
+    if (buttonA.getSwitch()) {
         Screen.print(0, "Azure IoT DevKit");
         Screen.print(1, "  Shake!");
         Screen.print(2, "     Shake!");
@@ -138,7 +138,7 @@ function DoIdle() {
     }
 }
 function DoShake() {
-    if (LSM6DSL.distance > 600) {
+    if (LSM6DSL.getDistance() > 600) {
         eventSent = false;
         var msgObj = new Message(iotEvent);
         client.sendEvent(msgObj, async function (err) {
@@ -168,7 +168,7 @@ function DoReceived() {
     status = 0;
 }
 async function ScrollTweet() {
-    if (msgBody != "" && buttonB.state.switch) {
+    if (msgBody != "" && buttonB.getSwitch()) {
         msgStart += 16;
         if (msgStart >= msgBody.length) {
             msgStart = 0;
