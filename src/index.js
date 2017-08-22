@@ -6,7 +6,6 @@ import App from './components/app';
 import reducer from './reducers';
 
 const store = createStore(reducer);
-window.st = store;
 
 render(
     <Provider store={store}>
@@ -14,3 +13,5 @@ render(
     </Provider>,
     document.getElementById('root')
 );
+
+export default store;

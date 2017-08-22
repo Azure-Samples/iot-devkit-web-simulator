@@ -1,0 +1,12 @@
+{
+    "bindings": [
+        {
+            "type": "eventHubTrigger",
+            "name": "myEventHubTrigger",
+            "direction": "in",
+            "path": "iot-mj",
+            "connection": "eventHubConnectionString"
+        }
+    ],
+    "disabled": false
+}

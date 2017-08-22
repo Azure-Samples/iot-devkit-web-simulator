@@ -93,12 +93,46 @@ body {
     display: flex;
 }
 
+.project-container {
+    flex: 1;
+    .project-explorer {
+        .show-items {
+            ~.project-file {
+                display: block;
+            }
+        }
+        .hide-items {
+            ~.project-file {
+                display: none;
+            }
+        }
+    }
+	.current-project{
+		.project-items-container {
+			// position: absolute;
+		}
+	}
+    .show-items {
+        .project-items-container {
+            display: block;
+        }
+    }
+    .hide-items {
+        .project-items-container {
+            display: none;
+        }
+    }
+}
+
 .right-container {
     display: flex;
     display: -webkit-flex;
     display: -ms-flex;
     display: -moz-flex;
     flex-flow: column;
+    .editor-container {
+        flex: 3;
+    }
     div.react-console-container {
         min-width: 100%;
         /*background: #4b4b4b;

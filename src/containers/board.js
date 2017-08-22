@@ -13,8 +13,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     setSensorData: (sensor, data) => {
-        console.log('[zhiqing.qiu] setSensorData called with',sensor,data)
-        window.ttt = data;
         setSensorData2(dispatch, sensor, data);
     },
 })

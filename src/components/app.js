@@ -10,6 +10,7 @@ import HelpOverlay from '../containers/helpOverlay';
 import ControlBar from '../containers/controlBar';
 import MyConsole from '../containers/console';
 import Editor from '../containers/editor';
+import Project from '../containers/project';
 import Board from '../containers/board';
 
 import { tracePageView, tracePageViewAI } from '../lib/telemetry.js';
@@ -97,7 +98,9 @@ class App extends Component {
                     <div className='left-container'>
                     <Board />
                     </div>
+                    <Project />
                     <div className='right-container'>
+                        
                         <Editor />
                         <ControlBar />
                         <MyConsole />

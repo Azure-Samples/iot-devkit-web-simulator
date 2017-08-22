@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import MyConsole from '../components/console';
-import { appendConsoleLog } from '../actions';
 import Localization from '../localization/localization';
 
 const mapStateToProps = (state) => ({
