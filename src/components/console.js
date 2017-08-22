@@ -4,8 +4,8 @@ import 'react-console-component/main.css';
 
 class MyConsole extends Component {
 
-    componentDidUpdate() {
-        this.writeLine(this.props.message);
+    componentDidUpdate(prevProps, prevState) {
+        this.writeLine(this.props.message.substring(prevProps.message.length));
         this.writeLine(this.props.error);
     }
 
@@ -25,7 +25,7 @@ class MyConsole extends Component {
     }
 
     promptLabel() {
-        return '> ';
+        return '';
     }
 
     render() {

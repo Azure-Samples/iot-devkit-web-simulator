@@ -1,5 +1,5 @@
 import * as types from '../constants/actionTypes';
-
+import {dispatch} from 'redux';
 // board
 export const switchBoard = (dispatch, on) => {
     dispatch({
@@ -43,3 +43,17 @@ export const appendConsoleLog = (dispatch, data) => {
         data,
     });
 };
+
+export const setEditorPath = (dispatch, path) => {
+    dispatch({
+        type: types.SET_EDITOR_PATH,
+        path,
+    });
+};
+
+export const selectProject = (dispatch, name) =>{
+	dispatch({
+		type: types.SELECT_PROJECT,
+		data: name,
+	});
+}

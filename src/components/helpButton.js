@@ -11,7 +11,7 @@ class HelpButton extends Component {
   
   render() {
     return (
-      <span className='help' onClick={this.onClick}>
+      <span className='banner-button' onClick={this.onClick}>
         {Localization.getLocalizedString().helpButton}
       </span>
     );

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Localization from '../localization/localization';
 import { traceEvent } from '../lib/telemetry.js';
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 import '../common.scss';
 
 import Banner from '../containers/banner';
@@ -10,6 +10,7 @@ import HelpOverlay from '../containers/helpOverlay';
 import ControlBar from '../containers/controlBar';
 import MyConsole from '../containers/console';
 import Editor from '../containers/editor';
+import Project from '../containers/project';
 import Board from '../containers/board';
 
 import { tracePageView, tracePageViewAI } from '../lib/telemetry.js';
@@ -94,12 +95,16 @@ class App extends Component {
             <div className='main'>
                 <Banner />
                 <div className='main-container'>
-                    <div className='left-container'>
-                    <Board />
+                    <Project />
+                    <div className='center-container'>
+                    <ControlBar />
+                    <Editor />
                     </div>
                     <div className='right-container'>
-                        <Editor />
-                        <ControlBar />
+                        <Board />
+                        <div className="get-a-kit">
+                            <a className="no-underline" target="_blank" href="http://mxchip.com/az3166" >Get a kit</a>  
+                            </div>
                         <MyConsole />
                     </div>
                 </div>

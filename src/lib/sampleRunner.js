@@ -1,7 +1,8 @@
 import { Client, Message } from 'azure-iot-device'
 import { traceEvent } from './telemetry.js';
 import Protocol from './mqtt.js';
-import codeFactory from '../data/codeFactory.js';
+import store from '../index';
+import { Map } from 'immutable';
 
 class ClientWrapper extends Client {
     constructor(transport, connStr, blobUploadClient) {
@@ -70,7 +71,7 @@ class SampleRunner {
     }
 
     static getInstance() {
-        if(!this.instance) {
+        if (!this.instance) {
             this.instance = new SampleRunner();
         }
         return this.instance;
@@ -84,7 +85,6 @@ class SampleRunner {
 
     run(msgCb, errCb) {
         // a prefix of UUID to avoid name conflict, here just use a fix one
-        console.log('[zhiqing.qiu] run called');
         const prefix = '76f98350';
         var replaces = [
             {
@@ -131,12 +131,12 @@ class SampleRunner {
 
         try {
             traceEvent('run-sample');
-            // temp dirty hack
-            console.log(window.mj)
-            var snippetName = window.mj.activeIndex === 1 ? "sample" : "sample2";
-            var src = codeFactory.getRunCode(snippetName, replaces, prefix);
-            this.runningFunction = new Function('replaces' + prefix, src);
-            window.mj = this.runningFunction;
+            let code = store.getState().project.getIn(['currentProject', 'jsCode']);
+            for (var i = 0; i < replaces.length; i++) {
+                var replace = replaces[i];
+                code = code.replace(replace.src, 'replaces' + prefix + '.' + replace.dest);
+            }
+            this.runningFunction = new Function('replaces' + prefix, code);
             this.runningFunction(Object.assign({
                 Client: ClientWrapper,
                 Message: Message,
@@ -144,10 +144,6 @@ class SampleRunner {
                 msgCb: msgCb,
                 errCb: errCb,
             }, window.devkitPlayground));
-            console.log('[zhiqing.qiu] function start');
-            // if (src.search(/^((?!\/\/).)*setInterval/gm) < 0) {
-            //     option.onFinish();
-            // }
         } catch (err) {
             traceEvent('run-error', { error: err });
             errCb(err.message || JSON.stringify(err));
