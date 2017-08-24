@@ -11,8 +11,8 @@ class Localization {
 
 Localization.localizedStringList = {
     en: {
-        pageTitle: "DevKit playground",
-        pageTitleMobile: "DevKit playground",
+        pageTitle: "DevKit Simulator",
+        pageTitleMobile: "DevKit Simulator",
         buttonRun: "Run",
         buttonStop: "Stop",
         buttonReset: "Reset",

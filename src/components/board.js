@@ -14,8 +14,8 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.board = {
-            cWidth: 700,
-            cHeight: 700,
+            cWidth: 650,
+            cHeight: 650,
             bWidth: 400,
             bHeight: 611,
         }
@@ -68,7 +68,7 @@ class Board extends Component {
 
     render() {
         return (
-            <Stage width={this.board.cWidth} height={this.board.cHeight} >
+            <Stage className="board-container" width={this.board.cWidth} height={this.board.cHeight} >
                 <Layer >
                     <Group ref={el => { this.element.board = el; }} draggable={true} x={this.selfX} y={this.selfY} width={this.board.bWidth} height={this.board.bHeight}>
                         <KonvaImage width={this.board.bWidth} height={this.board.bHeight} image={this.state.boardImage} />

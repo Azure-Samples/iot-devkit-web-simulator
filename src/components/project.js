@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { List } from 'immutable';
+import { List, is } from 'immutable';
 
 import '../common.scss'
 
 class Project extends Component {
     constructor(props) {
         super(props);
+        let file = this.props.project.get('files').findEntry(v => v.get('type') === 'file');
         this.state = {
             folders: {}, // collapsed,
             collapseProjectSelector: true,
+            selectedFilePath: List().push(file[0]),
         };
         this.initState(this.state.folders, this.props.project.get('files'), true);
     }
@@ -36,11 +38,20 @@ class Project extends Component {
     }
 
     toggleProjectSelectorCollapsed = () => {
-        this.setState((prev)=>{
+        this.setState((prev) => {
             return {
                 collapseProjectSelector: !prev.collapseProjectSelector,
             }
         })
+    }
+
+    fileClicked = (path) => {
+        this.setState(()=> {
+            return {
+                selectedFilePath: path,
+            }
+        })
+        this.props.setEditorPath(path);
     }
 
     renderProjects(allProjects) {
@@ -52,7 +63,8 @@ class Project extends Component {
     }
 
     renderFile(key, value, path) {
-        return <div key={key} onClick={this.props.setEditorPath.bind(this, path)} className="project-file">{key}</div>;
+        console.log(path);
+        return <div key={key} onClick={this.fileClicked.bind(this, path)} className={`project-file ${(is(this.state.selectedFilePath,path)) ? 'project-file-selected' : ''}`}>{key}</div>;
     }
 
     renderItems(files, root, folderName, path = List()) {
@@ -68,7 +80,7 @@ class Project extends Component {
             return items;
         } else {
             return <div key="project-folder-container" className="project-folder-container">
-                <div onClick={this.toggleFolderCollapsed.bind(this, folderName)} className={`project-folder ${this.state.folders[folderName] ? "hide-items" : "show-items"}`}>{folderName}</div>
+                <div onClick={this.toggleFolderCollapsed.bind(this, folderName)} className={`project-folder ${this.state.folders[folderName] ? "hide-items" : "show-items"}`}><span>{this.state.folders[folderName] ? "▷" : "◢"}</span>{folderName}</div>
                 {items}
             </div>;
         }

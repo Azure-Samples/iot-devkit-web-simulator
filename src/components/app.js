@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Localization from '../localization/localization';
 import { traceEvent } from '../lib/telemetry.js';
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 import '../common.scss';
 
 import Banner from '../containers/banner';
@@ -95,14 +95,16 @@ class App extends Component {
             <div className='main'>
                 <Banner />
                 <div className='main-container'>
-                    <div className='left-container'>
-                    <Board />
-                    </div>
                     <Project />
+                    <div className='center-container'>
+                    <ControlBar />
+                    <Editor />
+                    </div>
                     <div className='right-container'>
-                        
-                        <Editor />
-                        <ControlBar />
+                        <Board />
+                        <div className="get-a-kit">
+                            <a className="no-underline" target="_blank" href="http://mxchip.com/az3166" >Get a kit</a>  
+                            </div>
                         <MyConsole />
                     </div>
                 </div>

@@ -3,6 +3,8 @@ Tahoma,
 Geneva,
 Verdana,
 sans-serif;
+$color-background-grey: #dddddd;
+$color-background-lightgrey: #f4f4f4;
 $color-text-light: #bbbbbb;
 $color-text-dark: #333333;
 $break-small: 768px;
@@ -28,61 +30,188 @@ body {
     height: 100%;
     .banner {
         width: 100%;
-        height: 48px;
-        background: #2b2b2b;
-        padding: 8px 0;
-        border-bottom: solid;
-        border-bottom-width: 1px;
-        border-bottom-color: #bd4d28;
-        img {
-            margin: 0 8px 0 24px;
-            /*width: 48px;*/
-            height: 28px;
-            vertical-align: middle;
-        }
+        height: 30px;
+        background: #858585;
+        padding: 8px 20px;
         span {
             vertical-align: middle;
-            font-size: 15px;
+            font-size: 18px;
+            line-height: 30px;
             color: #fdfdfd;
         }
-        .help {
+        .banner-button {
             float: right;
-            line-height: 28px;
+            line-height: 30px;
             margin-right: 40px;
             color: white;
-            font-size: 15px;
+            font-size: 18px;
             cursor: pointer;
             &:hover {
                 color: grey;
             }
-            &:visited {
-                color: white;
+        }
+        .buy-link {
+            display: flex;
+            align-items: center;
+            span {
+                margin-left: 5px;
+                &:hover {
+                    color: grey;
+                }
             }
         }
     }
     .main-container {
         flex: 1;
         display: flex;
+        .project-container {
+            flex: 4;
+            background: $color-background-lightgrey;
+            $padding-left-right: 20px;
+            $font-size: 16px;
+            line-height: 32px;
+            font-size: $font-size;
+            .project-explorer {
+                .show-items {
+                    ~.project-file {
+                        display: block;
+                    }
+                }
+                .hide-items {
+                    ~.project-file {
+                        display: none;
+                    }
+                }
+            }
+            .project-file {
+                padding-right: $padding-left-right;
+                padding-left: $padding-left-right*2;
+                color: #5e5e5e;
+                cursor: pointer;
+                &:hover {
+                    background: #e5e5e5;
+                }
+            }
+            .project-file-selected {
+                background: #e5e5e5;
+            }
+            .project-folder-container {
+                .project-folder {
+                    padding: 0 $padding-left-right;
+                    color: #5e5e5e;
+                    cursor: pointer;
+                    &:hover {
+                        background: #e5e5e5;
+                        background-origin: content-box;
+                    }
+                    span {
+                        font-size: 12px;
+                        padding-right: 10px;
+                        font-weight: bold;
+                    }
+                }
+
+                .project-file {
+                    padding: 0 $padding-left-right;
+                    padding-left: $padding-left-right*3;
+                }
+            }
+            .current-project {
+                background: $color-background-grey;
+                padding: 0 $padding-left-right;
+                font-weight: bold;
+                line-height: 36px;
+                color: #858585;
+                .project-items-container {
+                    // position: absolute;
+                }
+            }
+            .show-items {
+                .project-items-container {
+                    display: block;
+                }
+            }
+            .hide-items {
+                .project-items-container {
+                    display: none;
+                }
+            }
+        }
         .canvas-container {
             width: 100% !important;
             height: 100% !important;
         }
-        .controlBar {
-            background-color: #dfdfdf;
-            border-bottom: solid;
-            border-bottom-color: #ababab;
-            border-bottom-width: 1px;
-            width: 100%;
-            height: 24px;
-            line-height: 24px;
-            padding-left: 18px;
-            span {
-                margin-right: 6px;
-                padding: 0 6px;
-                min-height: 24px;
-                font-size: 12px;
-                color: #2b2b2b;
-                cursor: pointer;
+        .center-container {
+            flex: 10;
+            display: flex;
+            flex-flow: column;
+            .controlBar {
+                background-color: white;
+                border-bottom: solid;
+                border-bottom-color: #dddddd;
+                border-bottom-width: 1px;
+                width: 100%;
+                height: 36px;
+                display: flex;
+                flex-flow: row-reverse;
+                span {
+                    color: white;
+                    text-align: center;
+                    background: rgb(96, 169, 23);
+                    margin-top: 6px;
+                    margin-bottom: 6px;
+                    width: 120px;
+                    cursor: pointer;
+                }
+            }
+            .editor-container {
+                flex: 1;
+            }
+        }
+        .right-container {
+            display: flex;
+            display: -webkit-flex;
+            display: -ms-flex;
+            display: -moz-flex;
+            flex-flow: column;
+            flex: 9;
+            .board-container {
+                display: flex;
+                justify-content: center;
+            }
+            .get-a-kit {
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                $color-link: #095286;
+                a {
+                    height: 30px;
+                    line-height: 30px;
+                    padding: 0px 18px;
+                    font-weight: 600;
+                    color: $color-link;
+                    border: 2px solid $color-link;
+                }
+            }
+            div.react-console-container {
+                min-width: 100%;
+                background: #f4f4f4;
+                .react-console-message {
+                    color: #4c4c4c;
+                }
+            }
+            @media (min-width: 769px) {
+                .showConsole {
+                    flex: 1;
+                }
+                .hideConsole {
+                    flex: 0;
+                }
+            }
+            @media (max-width: 768px) {
+                .showConsole {
+                    height: 240px;
+                }
             }
         }
     }
@@ -91,129 +220,6 @@ body {
 .display {
     flex: 1;
     display: flex;
-}
-
-.project-container {
-    flex: 1;
-    .project-explorer {
-        .show-items {
-            ~.project-file {
-                display: block;
-            }
-        }
-        .hide-items {
-            ~.project-file {
-                display: none;
-            }
-        }
-    }
-	.current-project{
-		.project-items-container {
-			// position: absolute;
-		}
-	}
-    .show-items {
-        .project-items-container {
-            display: block;
-        }
-    }
-    .hide-items {
-        .project-items-container {
-            display: none;
-        }
-    }
-}
-
-.right-container {
-    display: flex;
-    display: -webkit-flex;
-    display: -ms-flex;
-    display: -moz-flex;
-    flex-flow: column;
-    .editor-container {
-        flex: 3;
-    }
-    div.react-console-container {
-        min-width: 100%;
-        /*background: #4b4b4b;
-}
-
-div.react-console-prompt-box {
-	color: #fdfdfd;
-}
-
-span.react-console-prompt-label {
-	color: #4bfd2b;
-}
-
-div.react-console-focus span.react-console-cursor {
-	background: #efefef;
-	color: #2b2b2b;
-}
-
-div.react-console-nofocus span.react-console-cursor {
-	color: #fdfdfd;
-	outline: 0.1em solid #efefef;
-}
-
-@keyframes react-console-cursor-animation {
-	0% {
-		background: #efefef;
-		color: #2b2b2b;
-	}
-	50% {
-		background: #efefef;
-		color: #2b2b2b;
-	}
-	51% {
-		background: none;
-		color: #fdfdfd;
-	}
-	100% {
-		background: none;
-		color: #fdfdfd;
-	}
-}
-
-div.react-console-message {
-	color: #ababab;*/
-    }
-    .hideConsole {
-        display: none;
-    }
-    @media (min-width: 769px) {
-        .showConsole {
-            flex: 1;
-        }
-        .hideConsole {
-            flex: 0;
-        }
-    }
-    @media (max-width: 768px) {
-        .showConsole {
-            height: 240px;
-        }
-    }
-}
-
-@media (min-width: 769px) {
-    .left-container {
-        flex: 6;
-    }
-    .right-container {
-        overflow: hidden;
-        margin: 0 0px;
-        height: 100%;
-        flex: 7;
-    }
-}
-
-@media (max-width: 768px) {
-    .left-container,
-    .right-container {
-        width: 98%;
-        margin: 0 auto;
-    }
 }
 
 .codeEditor {
@@ -577,4 +583,8 @@ div.react-console-message {
 
 .placeholder-2 {
     flex: 2;
+}
+
+.no-underline {
+    text-decoration: none;
 }
