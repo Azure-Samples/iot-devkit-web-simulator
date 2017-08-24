@@ -33,7 +33,7 @@ class App extends Component {
             var disableHelp = localStorage.getItem("disable-help");
             if (disableHelp == null) {
                 traceEvent('help-open-first');
-                this.state.showHelp = true;
+                // this.state.showHelp = true;
                 localStorage.setItem("disable-help", "true");
             }
         }
