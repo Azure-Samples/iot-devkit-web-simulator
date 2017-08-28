@@ -1,9 +1,12 @@
 import {
     SET_EDITOR_PATH,
     SELECT_PROJECT,
+    SET_PROJECT_CONFIG,
+    UPDATE_DISPLAY_CODE,
 } from '../constants/actionTypes';
-import { Map } from 'immutable';
+import { Map, is } from 'immutable';
 import { getAllProjects } from '../lib/projectFactory';
+import * as CONSTANTS from '../constants/localStorageKeys';
 
 const getCodeInFirstFile = (project) => {
     for (let [k, v] of project.get('files')) {
@@ -26,30 +29,47 @@ const initialState = Map({
 });
 
 const project = (state = initialState, action) => {
-    switch (action.type) {
-        case SET_EDITOR_PATH:
-        console.log(['currentProject','files',...action.path])
-            let file = state.getIn(['currentProject','files',...action.path]);
-            console.log(file)
-            return state.merge(Map({
-                codeInEditor: file.get('data'),
-                codeLanguage: file.get('format'),
-            }));
-        case SELECT_PROJECT:
-            let currentProject = state.getIn(['projects', action.data]);
-            if (!project) {
-                return state;
-            }
-            let codeInEditor;
-            let codeLanguage;
-            [codeInEditor, codeLanguage] = getCodeInFirstFile(currentProject);
-            return state.merge(Map({
-                currentProject,
-                codeInEditor,
-                codeLanguage,
-            }));
-        default:
+    if (action.type === SET_EDITOR_PATH) {
+        let file = state.getIn(['currentProject', 'files', ...action.path]);
+        return state.merge(Map({
+            codeInEditor: file.get('data'),
+            codeLanguage: file.get('format'),
+        }));
+    } else if (action.type === SELECT_PROJECT) {
+        let currentProject = state.getIn(['projects', action.data]);
+        console.log(currentProject)
+        if (!currentProject) {
             return state;
+        }
+        let codeInEditor;
+        let codeLanguage;
+        [codeInEditor, codeLanguage] = getCodeInFirstFile(currentProject);
+        return state.merge(Map({
+            currentProject,
+            codeInEditor,
+            codeLanguage,
+        }));
+    } else if (action.type === SET_PROJECT_CONFIG) {
+        let currentProject = state.get('currentProject');
+        let updatedProject = currentProject.update('config', map => map.merge(action.data));
+        let currentProjectName = state.get('projects').findEntry(v => is(v, currentProject))[0];
+        if (currentProjectName === "ShakeShake") {
+            updatedProject = updatedProject.updateIn(['files', 'ShakeShake.ino', 'data'],
+                value => value.replace(/("{\\"topic\\":\\")[^\\]*(\\"}";)/, '$1' + action.data.topic + '$2')
+            );
+            localStorage.setItem(CONSTANTS.SHAKESHAKE_CONNECTIONSTRING, action.data.connectionString);
+            localStorage.setItem(CONSTANTS.SHAKESHAKE_TOPIC, action.data.topic);
+        }else if(currentProjectName === "GetStarted") {
+            localStorage.setItem(CONSTANTS.GETSTARTED_CONNECTIONSTRING, action.data.connectionString);
+        }
+        if (state.get('codeInEditor') === state.getIn(['currentProject', 'files', 'ShakeShake.ino', 'data'])) {
+            return state.set('currentProject', updatedProject).setIn(['projects', currentProjectName], updatedProject)
+                .set('codeInEditor', updatedProject.getIn(['files', 'ShakeShake.ino', 'data']));
+        } else {
+            return state.set('currentProject', updatedProject).setIn(['projects', currentProjectName], updatedProject);
+        }
+    } else {
+        return state;
     }
 };
 

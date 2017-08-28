@@ -3,6 +3,7 @@ import { traceEvent } from './telemetry.js';
 import Protocol from './mqtt.js';
 import store from '../index';
 import { Map } from 'immutable';
+import { showRunningInfo, runSample } from '../actions';
 
 class ClientWrapper extends Client {
     constructor(transport, connStr, blobUploadClient) {
@@ -86,11 +87,20 @@ class SampleRunner {
     run(msgCb, errCb) {
         // a prefix of UUID to avoid name conflict, here just use a fix one
         const prefix = '76f98350';
+        const connectionString = store.getState().project.getIn(['currentProject', 'config', 'connectionString']);
+        const topic = store.getState().project.getIn(['currentProject', 'config', 'topic']);
+        if (connectionString === '') {
+            showRunningInfo(store.dispatch, 'Please provision cloud service and then provide the connection string');
+            return;
+        }
+        if (! /^HostName=([^;]*);DeviceId=([^;]*);SharedAccessKey=(.*)$/.test(connectionString)) {
+            showRunningInfo(store.dispatch, 'Invalid format for connection string');
+            return;
+        }
+        runSample(store.dispatch);
+        showRunningInfo(store.dispatch, '');
         var replaces = [
             {
-                src: /require\('wiring-pi'\)/g,
-                dest: 'wpi'
-            }, {
                 src: /require\('azure-iot-device'\)\.Client/g,
                 dest: 'Client'
             }, {
@@ -100,12 +110,9 @@ class SampleRunner {
                 src: /require\('azure-iot-device-mqtt'\)\.Mqtt/g,
                 dest: 'Protocol'
             }, {
-                src: /require\('bme280-sensor'\)/g,
-                dest: 'BME280'
-            }, {
-                src: /console\.log/g,
-                dest: 'msgCb'
-            }, {
+            //     src: /console\.log/g,
+            //     dest: 'msgCb'
+            // }, {
                 src: /console\.error/g,
                 dest: 'errCb'
             }, {
@@ -126,7 +133,7 @@ class SampleRunner {
             }, {
                 src: /require\('lsm6dsl'\)/g,
                 dest: 'lsm6dsl'
-            }
+            }, 
         ];
 
         try {
@@ -136,6 +143,9 @@ class SampleRunner {
                 var replace = replaces[i];
                 code = code.replace(replace.src, 'replaces' + prefix + '.' + replace.dest);
             }
+            code = code.replace(/\[CONNECTION_STRING_PLACE_HOLDER\]/g,connectionString);
+            code = code.replace(/\[TOPIC_PLACE_HOLDER\]/g,topic);
+            console.log(code)
             this.runningFunction = new Function('replaces' + prefix, code);
             this.runningFunction(Object.assign({
                 Client: ClientWrapper,
