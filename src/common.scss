@@ -8,28 +8,29 @@ $color-background-lightgrey: #f4f4f4;
 $color-text-light: #bbbbbb;
 $color-text-dark: #333333;
 $break-small: 768px;
+html {
+    height: 100%;
+}
+
 body {
     margin: 0;
-    padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     height: 100%;
-    position: absolute;
-    bottom: 0;
-    top: 0;
-    right: 0;
-    left: 0;
+    width: 100%;
+    overflow-y: hidden;
 }
 
 #root {
+    display: flex;
     height: 100%;
+    width: 100%;
 }
 
 .main {
+    flex: 1;
     display: flex;
     flex-flow: column;
-    height: 100%;
     .banner {
-        width: 100%;
         height: 30px;
         background: #858585;
         padding: 8px 20px;
@@ -71,7 +72,10 @@ body {
             $font-size: 16px;
             line-height: 32px;
             font-size: $font-size;
+            display: flex;
+            flex-flow: column;
             .project-explorer {
+                flex: 2;
                 .show-items {
                     ~.project-file {
                         display: block;
@@ -104,13 +108,29 @@ body {
                         background: #e5e5e5;
                         background-origin: content-box;
                     }
-                    span {
-                        font-size: 12px;
-                        padding-right: 10px;
-                        font-weight: bold;
+                    .folder-icon-collapsed {
+                        $size: 4px;
+                        width: 0;
+                        display: inline-block;
+                        margin-right: 10px;
+                        vertical-align: middle;
+                        height: 0;
+                        border-style: solid;
+                        border-width: $size 0 $size $size*2;
+                        border-color: transparent transparent transparent black;
+                    }
+                    .folder-icon-expanded {
+                        $size: 8px;
+                        width: 0;
+                        display: inline-block;
+                        margin-right: 10px;
+                        vertical-align: middle;
+                        height: 0;
+                        border-style: solid;
+                        border-width: 0 0 $size $size;
+                        border-color: transparent transparent black transparent;
                     }
                 }
-
                 .project-file {
                     padding: 0 $padding-left-right;
                     padding-left: $padding-left-right*3;
@@ -124,6 +144,40 @@ body {
                 color: #858585;
                 .project-items-container {
                     // position: absolute;
+                }
+            }
+            .configure-container {
+                flex: 1;
+                .configure-container-header {
+                    background: #dddddd;
+                    font-weight: bold;
+                    line-height: 36px;
+                    color: #858585;
+                    padding: 0 20px;
+                    display: flex;
+                    justify-content: space-between;
+                    .configure-container-title {
+                        flex: 1;
+                    }
+                    .configure-button {
+                        flex: 1;
+                        display: flex;
+                        justify-content: flex-end;
+                        span {
+                            margin-left: 20px;
+                            cursor: pointer;
+                        }
+                    }
+                    .hide {
+                        visibility: hidden;
+                    }
+                }
+                .configure-item {
+                    padding: 0 20px;
+                    .configure-item-key {}
+                    .configure-item-value {
+                        width: 100%;
+                    }
                 }
             }
             .show-items {
@@ -154,7 +208,11 @@ body {
                 height: 36px;
                 display: flex;
                 flex-flow: row-reverse;
-                span {
+                align-items: center;
+                .run-button {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                     color: white;
                     text-align: center;
                     background: rgb(96, 169, 23);
@@ -162,6 +220,17 @@ body {
                     margin-bottom: 6px;
                     width: 120px;
                     cursor: pointer;
+                    .fa-play, .fa-stop {
+                        margin-right: 10px;
+                    }
+                }
+                .stop {
+                    background: #095286;
+                }
+                .run-info {
+                    color: red;
+                    font-weight: bold;
+                    margin-right: 30px;
                 }
             }
             .editor-container {
@@ -170,12 +239,10 @@ body {
         }
         .right-container {
             display: flex;
-            display: -webkit-flex;
-            display: -ms-flex;
-            display: -moz-flex;
             flex-flow: column;
             flex: 9;
             .board-container {
+                flex: 2;
                 display: flex;
                 justify-content: center;
             }
@@ -195,6 +262,7 @@ body {
             }
             div.react-console-container {
                 min-width: 100%;
+                height: 100%;
                 background: #f4f4f4;
                 .react-console-message {
                     color: #4c4c4c;
@@ -215,16 +283,6 @@ body {
             }
         }
     }
-}
-
-.display {
-    flex: 1;
-    display: flex;
-}
-
-.codeEditor {
-    width: 100%;
-    flex: 1;
 }
 
 .tabBar {
@@ -268,51 +326,6 @@ body {
     font-size: 14px;
     text-align: center;
     vertical-align: middle;
-}
-
-.ace_gutter,
-.ace_scroller {
-    padding-top: 8px;
-}
-
-.ace_gutter-active-line {
-    margin-top: 8px;
-}
-
-.ace_scrollbar {
-    display: none;
-}
-
-.ace_editor:hover .ace_scrollbar {
-    display: block;
-}
-
-.codeEditorTitle {
-    color: #8b8b8b;
-    font-weight: bold;
-    margin: 4px auto;
-    display: none;
-}
-
-@media (min-width: 769px) {
-    .codeEditorLong,
-    .codeEditorShort {
-        flex: 3;
-        display: flex;
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 768px) {
-    .codeEditorTitle {
-        display: block;
-    }
-    .codeEditorLong {
-        height: 1024px;
-    }
-    .codeEditorShort {
-        height: 640px;
-    }
 }
 
 .editor {

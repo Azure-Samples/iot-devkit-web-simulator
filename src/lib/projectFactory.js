@@ -1,10 +1,14 @@
 import { Map } from 'immutable';
+import * as CONSTANTS from '../constants/localStorageKeys';
 
 export const getAllProjects = () => {
 	return Map({
 		GetStarted: Map({
 			jsCode: require('../data/GetStarted/mockedSample.js'),
 			displayName: "Get Started",
+            config: Map({
+                connectionString: localStorage.getItem(CONSTANTS.GETSTARTED_CONNECTIONSTRING) ? localStorage.getItem(CONSTANTS.GETSTARTED_CONNECTIONSTRING) : "",
+            }),
 			files: Map({
 				"GetStarted.ino": Map({
 					type: "file",
@@ -41,6 +45,10 @@ export const getAllProjects = () => {
 		ShakeShake: Map({
 			jsCode: require('../data/ShakeShake/mockedSample.js'),
 			displayName: "Shake Shake",
+            config: Map({
+                connectionString: localStorage.getItem(CONSTANTS.SHAKESHAKE_CONNECTIONSTRING) ? localStorage.getItem(CONSTANTS.SHAKESHAKE_CONNECTIONSTRING) : "",
+                topic: localStorage.getItem(CONSTANTS.SHAKESHAKE_TOPIC) ? localStorage.getItem(CONSTANTS.SHAKESHAKE_TOPIC) : "song",
+            }),
 			files: Map({
 				"azureFunction": Map({
 					type: "directory",
@@ -65,7 +73,7 @@ export const getAllProjects = () => {
 				"ShakeShake.ino": Map({
 					type: "file",
 					format: "cpp",
-					data: require('../data/ShakeShake/ShakeShake.ino'),
+                    data: localStorage.getItem(CONSTANTS.SHAKESHAKE_TOPIC) ? require('../data/ShakeShake/ShakeShake.ino').replace(/("{\\"topic\\":\\")[^\\]*(\\"}";)/, '$1' + localStorage.getItem(CONSTANTS.SHAKESHAKE_TOPIC) + '$2') : require('../data/ShakeShake/ShakeShake.ino'),
 				}),
 				"_iothub_client_sample_mqtt.h": Map({
 					type: "file",

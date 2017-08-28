@@ -35,11 +35,19 @@ export const stopSample = (dispatch) => {
     dispatch({
         type: types.STOP_SAMPLE,
     });
+    switchBoard(dispatch,false);
 };
 
 export const appendConsoleLog = (dispatch, data) => {
     dispatch({
         type: types.APPEND_CONSOLE_LOG,
+        data,
+    });
+};
+
+export const showRunningInfo = (dispatch, data) => {
+    dispatch({
+        type: types.SHOW_RUNNING_INFO,
         data,
     });
 };
@@ -55,5 +63,13 @@ export const selectProject = (dispatch, name) =>{
 	dispatch({
 		type: types.SELECT_PROJECT,
 		data: name,
+	});
+    stopSample(dispatch);
+}
+
+export const setProjectConfig = (dispatch, configObject) =>{
+	dispatch({
+		type: types.SET_PROJECT_CONFIG,
+        data: configObject,
 	});
 }

@@ -27,10 +27,6 @@ class Board extends Component {
         }
     }
 
-    componentDidUpdate() {
-        console.log('[zhiqing.qiu] board component did update')
-    }
-
     componentDidMount() {
         const image = new window.Image();
         image.src = devkitImage;

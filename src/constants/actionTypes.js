@@ -4,6 +4,8 @@ export const APPEND_CONSOLE_LOG = Symbol('APPEND_CONSOLE_LOG');
 
 export const SELECT_PROJECT = Symbol('SELECT_PROJECT');
 export const SET_EDITOR_PATH = Symbol('SET_EDITOR_PATH');
+export const SET_PROJECT_CONFIG = Symbol('SET_PROJECT_CONFIG');
+export const SHOW_RUNNING_INFO = Symbol('SHOW_RUNNING_INFO');
 
 export const SWITCH_HELP = Symbol('SWITCH_HELP');
 

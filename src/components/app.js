@@ -108,7 +108,7 @@ class App extends Component {
                         <MyConsole />
                     </div>
                 </div>
-                <HelpOverlay />
+                {/*<HelpOverlay />*/}
 
                 {/*<Banner 
         toggleHelpState = {this.toggleHelpState} />

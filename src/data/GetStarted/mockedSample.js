@@ -8,7 +8,7 @@ var led = require('led');
 var buttonA = require('buttonA');
 var Screen = require('oled');
 var HTS221 = require('hts221');
-const connectionString = 'HostName=iot-mj-prod.azure-devices.net;DeviceId=pl;SharedAccessKey=54EhDV3PyL7wQKF37aiiTnoewEsuc3n9jjkJ1OsDbk4=';
+const connectionString = '[CONNECTION_STRING_PLACE_HOLDER]';
 var sendingMessage = false;
 var messageId = 0;
 var client, sensor;

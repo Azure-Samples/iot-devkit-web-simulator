@@ -43,7 +43,11 @@ const initialState = Map({
 const board = (state = initialState, action) => {
     switch (action.type) {
         case SWITCH_ON_OFF_BOARD:
-            return state.set('switchOn', action.data);
+            if (action.data) {
+                return state.set('switchOn', action.data);
+            } else {
+                return initialState;
+            }
         case SET_SENSOR_DATA:
             if (action.sensor === sensorName.LSM6DSL) {
                 let current = state.getIn(['sensor', sensorName.LSM6DSL]);
@@ -55,11 +59,7 @@ const board = (state = initialState, action) => {
                 }
             }
             else {
-                console.log('[zhiqing] ', state.getIn(['sensor', action.sensor]).get('0'), state.getIn(['sensor', action.sensor]).get('1'), state.getIn(['sensor', action.sensor]).get('2'), state.getIn(['sensor', action.sensor]).get('3'));
                 let t = state.updateIn(['sensor', action.sensor], value => value.merge(action.data));
-
-                console.log('[zhiqing] ', action.data.get('0'), action.data.get('1'), action.data.get('2'), action.data.get('3'));
-                console.log('[zhiqing] ', is(t, state));
                 return t;
             }
         default:
