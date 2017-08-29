@@ -56,6 +56,8 @@ const board = (state = initialState, action) => {
                 } else if (current.get('inMotion') && action.data.get('inMotion')) {
                     return state.updateIn(['sensor', action.sensor, 'distance'], value => value + (Math.abs(current.get('x') - action.data.get('x')) + Math.abs(current.get('y') - action.data.get('y'))))
                         .updateIn(['sensor', action.sensor], value => value.merge(action.data));
+                } else {
+                    return state.updateIn(['sensor', action.sensor], value => value.merge(action.data));
                 }
             }
             else {
