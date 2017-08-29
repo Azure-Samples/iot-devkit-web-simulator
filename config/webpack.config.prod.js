@@ -8,7 +8,7 @@ var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
 // Webpack uses `publicPath` to determine where the app is being served from.
