@@ -1,12 +1,13 @@
 {
-    "bindings": [
-        {
-            "type": "eventHubTrigger",
-            "name": "myEventHubTrigger",
-            "direction": "in",
-            "path": "DevKit-IoT",
-            "connection": "eventHubConnectionString"
-        }
-    ],
-    "disabled": false
+  "bindings": [
+    {
+      "type": "eventHubTrigger",
+      "name": "myEventHubMessage",
+      "direction": "in",
+      "path": "%eventHubConnectionPath%",
+      "connection": "eventHubConnectionString",
+      "cardinality": "one"
+    }
+  ],
+  "disabled": false
 }
