@@ -1,0 +1,182 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "iotHubName": {
+            "type": "string"
+        },
+        "iotHubSku": {
+            "type": "string",
+            "allowedValues": [
+                "F1",
+                "S1",
+                "S2"
+            ],
+            "defaultValue": "F1"
+        },
+        "iotHubCapacity": {
+            "type": "int",
+            "minValue": 1,
+            "defaultValue": 1
+        },
+        "repoUrl": {
+            "type": "string",
+            "defaultValue": "https://github.com/Azure-Samples/iot-devkit-web-simulator.git"
+        }
+    },
+    "variables": {
+        "resourceLocation": "[resourceGroup().location]",
+        "functionAppName": "[ concat('function', uniquestring(resourceGroup().id))]",
+        "hostingPlanName": "[ concat('function', uniquestring(resourceGroup().id))]",
+        "funcAppsSiteName": "[ concat('function', uniquestring(resourceGroup().id))]",
+        "storageAccountName": "[ concat('storage', uniquestring(resourceGroup().id))]",
+        "iotHubResourceId": "[resourceId('Microsoft.Devices/Iothubs', parameters('iotHubName'))]",
+        "iotHubKeyResource": "[resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), 'iothubowner')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Devices/IotHubs",
+            "sku": {
+                "name": "[parameters('iotHubSku')]",
+                "capacity": "[parameters('iotHubCapacity')]"
+            },
+            "name": "[parameters('iotHubName')]",
+            "apiVersion": "2016-02-03",
+            "location": "[variables('resourceLocation')]",
+            "tags": {},
+            "properties": {
+                "eventHubEndpoints": {
+                    "events": {
+                        "retentionTimeInDays": 1,
+                        "partitionCount": 2
+                    }
+                },
+                "enableFileUploadNotifications": false,
+                "features": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[variables('storageAccountName')]",
+            "apiVersion": "2016-01-01",
+            "location": "[variables('resourceLocation')]",
+            "tags": {},
+            "properties": {},
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "sku": {
+                "name": "Y1",
+                "tier": "Dynamic",
+                "size": "Y1",
+                "family": "Y",
+                "capacity": 0
+            },
+            "kind": "functionapp",
+            "name": "[variables('functionAppName')]",
+            "apiVersion": "2015-08-01",
+            "location": "[variables('resourceLocation')]",
+            "properties": {
+                "name": "[variables('functionAppName')]",
+                "numberOfWorkers": 0
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "kind": "functionapp",
+            "name": "[variables('funcAppsSiteName')]",
+            "apiVersion": "2015-08-01",
+            "location": "[variables('resourceLocation')]",
+            "properties": {
+                "name": "[variables('funcAppsSiteName')]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "AzureWebJobsDashboard",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')),'2015-05-01-preview').key1)]"
+                        },
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')),'2015-05-01-preview').key1)]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')),'2015-05-01-preview').key1)]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTSHARE",
+                            "value": "[concat(toLower(variables('functionAppName')),'azfunccontents')]"
+                        },
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~1"
+                        },
+                        {
+                            "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                            "value": "6.5.0"
+                        },
+                        {
+                            "name": "eventHubConnectionString",
+                            "value": "[concat('Endpoint=',reference(resourceId('Microsoft.Devices/IoTHubs',parameters('iotHubName'))).eventHubEndpoints.events.endpoint,';SharedAccessKeyName=iothubowner;SharedAccessKey=',listKeys(resourceId('Microsoft.Devices/IotHubs',parameters('iotHubName')),'2016-02-03').value[0].primaryKey)]"
+                        },
+                        {
+                            "name": "eventHubConnectionPath",
+                            "value": "[reference(resourceId('Microsoft.Devices/IoTHubs',parameters('iotHubName'))).eventHubEndpoints.events.path]"
+                        },
+                        {
+                            "name": "iotHubConnectionString",
+                            "value": "[concat('HostName=',parameters('iotHubName'),';SharedAccessKeyName=iothubowner;SharedAccessKey=',listKeys(resourceId('Microsoft.Devices/IotHubs/Iothubkeys', parameters('iotHubName'), 'iothubowner'), '2016-02-03').primaryKey)]"
+                        }
+                    ]
+                },
+                "hostNames": [
+                    "[concat(variables('funcAppsSiteName'),'.azurewebsites.net')]"
+                ],
+                "enabledHostNames": [
+                    "[concat(variables('funcAppsSiteName'),'.azurewebsites.net')]",
+                    "[concat(variables('funcAppsSiteName'),'.scm.azurewebsites.net')]"
+                ],
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(variables('funcAppsSiteName'),'.azurewebsites.net')]",
+                        "sslState": 0,
+                        "thumbprint": null,
+                        "ipBasedSslState": 0
+                    },
+                    {
+                        "name": "[concat(variables('funcAppsSiteName'),'.scm.azurewebsites.net')]",
+                        "sslState": 0,
+                        "thumbprint": null,
+                        "ipBasedSslState": 0
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+            ],
+            "resources": [
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "web",
+                    "type": "sourcecontrols",
+                    "properties": {
+                        "RepoUrl": "[parameters('repoUrl')]",
+                        "branch": "shakeshake_funcapp",
+                        "IsManualIntegration": true
+                    },"dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
+                    ]
+                }
+            ]
+        }
+    ]
+}

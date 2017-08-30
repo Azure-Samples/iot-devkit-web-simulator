@@ -58,15 +58,15 @@ export const getAllProjects = () => {
 							format: "json",
 							data: require('../data/ShakeShake/azureFunction/function.json'),
 						}),
-						"index.js": Map({
+						"run.csx": Map({
 							type: "file",
-							format: "javascript",
-							data: require('../data/ShakeShake/azureFunction/index.js'),
+							format: "csharp",
+							data: require('../data/ShakeShake/azureFunction/run.csx'),
 						}),
-						"package.json": Map({
+						"project.json": Map({
 							type: "file",
 							format: "json",
-							data: require('../data/ShakeShake/azureFunction/package.json'),
+							data: require('../data/ShakeShake/azureFunction/project.json'),
 						}),
 					})
 				}),
