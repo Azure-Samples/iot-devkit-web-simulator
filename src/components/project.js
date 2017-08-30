@@ -143,6 +143,7 @@ class Project extends Component {
         return (
             <div className="project-container">
                 <div className={`current-project ${this.state.collapseProjectSelector ? "hide-items" : "show-items"}`} onClick={this.toggleProjectSelectorCollapsed}>
+                    <i className={`fa ${this.state.collapseProjectSelector ? "fa-caret-down" : "fa-caret-up" }`} aria-hidden="true"></i>
                     {this.props.project.get('displayName')}
                     <div className="project-items-container" >
                         {this.renderProjects(this.props.allProjects)}

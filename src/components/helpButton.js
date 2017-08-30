@@ -12,7 +12,7 @@ class HelpButton extends Component {
   render() {
     return (
       <span className='banner-button' onClick={this.onClick}>
-        {Localization.getLocalizedString().helpButton}
+        <i className="fa fa-question-circle" aria-hidden="true"></i>{Localization.getLocalizedString().helpButton}
       </span>
     );
   }

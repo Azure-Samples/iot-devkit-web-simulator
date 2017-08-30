@@ -3,7 +3,6 @@ import rpiLogo from '../img/rpi-logo.png'
 import HelpButton from './helpButton';
 import Localization from '../localization/localization';
 import '../common.scss';
-import cart from '../img/cart.png';
 
 class Banner extends Component {
   render() {
@@ -13,7 +12,7 @@ class Banner extends Component {
         <span>{window.innerWidth<=768?Localization.getLocalizedString().pageTitleMobile:Localization.getLocalizedString().pageTitle}</span>
         <HelpButton 
           switchHelp = {this.props.switchHelp} />
-        <a className="no-underline banner-button buy-link" target="_blank" href="http://mxchip.com/az3166" ><img src={cart} className="cart"/><span>Buy</span></a>  
+        <a className="no-underline banner-button buy-link" target="_blank" href="http://mxchip.com/az3166" ><i className="fa fa-shopping-cart" aria-hidden="true"></i><span>Buy</span></a>  
       </div>
     );
   }
