@@ -12,7 +12,7 @@ class Banner extends Component {
         <span>{window.innerWidth<=768?Localization.getLocalizedString().pageTitleMobile:Localization.getLocalizedString().pageTitle}</span>
         <HelpButton 
           switchHelp = {this.props.switchHelp} />
-        <a className="no-underline banner-button buy-link" target="_blank" href="http://mxchip.com/az3166" ><i className="fa fa-shopping-cart" aria-hidden="true"></i><span>Buy</span></a>  
+        <a className="no-underline banner-button buy-link" target="_blank" href="http://mxchip.com/az3166" ><i className="fa fa-shopping-cart" aria-hidden="true"></i>Buy</a>  
       </div>
     );
   }

@@ -8,6 +8,8 @@ $color-background-lightgrey: #f4f4f4;
 $color-text-light: #bbbbbb;
 $color-text-dark: #333333;
 $break-small: 768px;
+$animation: all ease 0.3s;
+$animation-long: all ease 0.6s;
 html {
     height: 100%;
 }
@@ -47,6 +49,7 @@ body {
             color: white;
             font-size: 18px;
             cursor: pointer;
+            transition: $animation-long;
             &:hover {
                 color: $color-text-light;
             }
@@ -72,6 +75,7 @@ body {
             background: $color-background-lightgrey;
             $padding-left-right: 20px;
             $font-size: 16px;
+            
             line-height: 32px;
             font-size: $font-size;
             display: flex;
@@ -94,6 +98,7 @@ body {
                 padding-left: $padding-left-right*2;
                 color: #5e5e5e;
                 cursor: pointer;
+                transition: $animation;
                 &:hover {
                     background: #e5e5e5;
                 }
@@ -106,6 +111,7 @@ body {
                     padding: 0 $padding-left-right;
                     color: #5e5e5e;
                     cursor: pointer;
+                    transition: $animation;
                     &:hover {
                         background: #e5e5e5;
                         background-origin: content-box;
@@ -146,6 +152,7 @@ body {
                 line-height: 36px;
                 color: #858585;
                 cursor: pointer;
+                transition: $animation;
                 &:hover {
                     background: #cccccc;
                 }
@@ -156,13 +163,12 @@ body {
                     position: absolute;
                     left: 0;
                     top: 36px;
-                    
                     background: $color-background-grey;
                     width: 100%;
-
                     .project-item {
                         margin-left: $padding-left-right*-2;
-                    padding: 0 $padding-left-right*4;
+                        padding: 0 $padding-left-right*4;
+                        transition: $animation;
                         &:hover {
                             background: #cccccc;
                         }
@@ -186,13 +192,18 @@ body {
                         flex: 1;
                         display: flex;
                         justify-content: flex-end;
+                        opacity: 1;
+                        visibility: visible;
+                        transition: $animation-long;
                         span {
                             margin-left: 20px;
                             cursor: pointer;
                         }
                     }
                     .hide {
+                        opacity: 0;
                         visibility: hidden;
+                        transition: $animation-long;
                     }
                 }
                 .configure-item {
@@ -243,7 +254,12 @@ body {
                     margin-bottom: 6px;
                     width: 120px;
                     cursor: pointer;
-                    .fa-play, .fa-stop {
+                    transition: $animation-long;
+                    &:hover {
+                        background: #19a6ff;
+                    }
+                    .fa-play,
+                    .fa-stop {
                         margin-right: 10px;
                     }
                 }
@@ -281,28 +297,23 @@ body {
                     font-weight: 600;
                     color: $color-link;
                     border: 2px solid $color-link;
+                    transition: $animation-long;
+                    &:hover {
+                        color: white;
+                        background: $color-link;
+                    }
                 }
             }
             div.react-console-container {
-                min-width: 100%;
                 height: 100%;
+                width: auto;
                 background: #f4f4f4;
                 .react-console-message {
                     color: #4c4c4c;
                 }
             }
-            @media (min-width: 769px) {
-                .showConsole {
-                    flex: 1;
-                }
-                .hideConsole {
-                    flex: 0;
-                }
-            }
-            @media (max-width: 768px) {
-                .showConsole {
-                    height: 240px;
-                }
+            .showConsole {
+                flex: 1;
             }
         }
     }

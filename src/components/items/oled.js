@@ -51,7 +51,7 @@ class OLED extends React.Component {
     render() {
         return (
             <Group>
-                <Rect
+                <Rect 
                     x={this.props.x} y={this.props.y} width={this.props.w} height={this.props.h}
                     fill={"black"} />
                 <Text x={this.props.x} y={this.props.y} width={this.props.w} lineHeight={this.props.h / 4} text={this.props.data.get('0')} fill="#ffde84" padding={5} fontSize={this.font.size} fontFamily="serif" />

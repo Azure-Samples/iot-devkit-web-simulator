@@ -13,21 +13,65 @@ import * as sensorName from '../constants/sensorName';
 class Board extends Component {
     constructor(props) {
         super(props);
-        this.board = {
-            cWidth: 650,
-            cHeight: 650,
-            bWidth: 400,
-            bHeight: 611,
-        }
         this.element = {};
-        this.selfX = (this.board.cWidth - this.board.bWidth) / 2;
-        this.selfY = (this.board.cHeight - this.board.bHeight) / 2;
         this.state = {
             boardImage: null,
+            board: {
+                cWidth: 0,
+                cHeight: 0,
+                bWidth: 0,
+                bHeight: 0,
+            },
+            selfX: 0,
+            selfY: 0,
         }
     }
 
+    elasticEaseOut = (t, b, c, d, a, p) => {
+        // added s = 0
+        let s = 0;
+        if (t === 0) {
+            return b;
+        }
+        if ((t /= d) === 1) {
+            return b + c;
+        }
+        if (!p) {
+            p = d * 0.3;
+        }
+        if (!a || a < Math.abs(c)) {
+            a = c;
+            s = p / 4;
+        } else {
+            s = p / (2 * Math.PI) * Math.asin(c / a);
+        }
+        return a *
+            Math.pow(2, (-10) * t) *
+            Math.sin((t * d - s) * (2 * Math.PI) / p) +
+            c +
+            b;
+    }
+
     componentDidMount() {
+        let cHeight = this.stage.domNode.offsetHeight;
+        let cWidth = this.stage.domNode.offsetWidth;
+        let bHeight = cHeight * 0.8;
+        let bWidth = bHeight / 611.0 * 400.0;
+        let st = this.stage.getStage();
+        st.height(cHeight);
+        st.width(cWidth);
+        this.setState(() => {
+            return {
+                board: {
+                    cWidth,
+                    cHeight,
+                    bWidth,
+                    bHeight,
+                },
+                selfX: (cWidth - bWidth) / 2,
+                selfY: (cHeight - bHeight) / 2,
+            };
+        });
         const image = new window.Image();
         image.src = devkitImage;
         image.onload = () => {
@@ -36,11 +80,24 @@ class Board extends Component {
             });
         }
         this.element.board.on('dragstart', () => {
+            this.element.image.to({
+                duration: 0.2,
+                // scaleX: shape.getAttr('startScale'),
+                // scaleY: shape.getAttr('startScale'),
+                shadowOffsetX: 10,
+                shadowOffsetY: 10,
+            });
             this.props.setSensorData(sensorName.LSM6DSL, Map({
                 inMotion: true,
             }));
         });
         this.element.board.on('dragmove', () => {
+            this.setState(() => {
+                return {
+                    selfX: this.element.board.attrs.x,
+                    selfY: this.element.board.attrs.y,
+                };
+            });
             this.selfX = this.element.board.attrs.x;
             this.selfY = this.element.board.attrs.y;
             this.props.setSensorData(sensorName.LSM6DSL, Map({
@@ -50,6 +107,14 @@ class Board extends Component {
             }));
         });
         this.element.board.on('dragend', () => {
+            this.element.image.to({
+                duration: 0.5,
+                easing: this.elasticEaseOut,
+                // scaleX: shape.getAttr('startScale'),
+                // scaleY: shape.getAttr('startScale'),
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+            });
             this.props.setSensorData(sensorName.LSM6DSL, Map({
                 inMotion: false,
             }));
@@ -57,26 +122,23 @@ class Board extends Component {
         if (!window.devkitPlayground) {
             window.devkitPlayground = Object.assign({}, this.element);
         }
-        // setInterval(()=>{
-        //     console.log('[zhiqing.qiu] ',...this.props.sensor.get(sensorName.OLED).get('text'))
-        // },300);
     }
 
     render() {
         return (
-            <Stage className="board-container" width={this.board.cWidth} height={this.board.cHeight} >
+            <Stage ref={el => { this.stage = el; }} className="board-container" width={this.state.board.cWidth} height={this.state.board.cHeight} >
                 <Layer >
-                    <Group ref={el => { this.element.board = el; }} draggable={true} x={this.selfX} y={this.selfY} width={this.board.bWidth} height={this.board.bHeight}>
-                        <KonvaImage width={this.board.bWidth} height={this.board.bHeight} image={this.state.boardImage} />
-                        <OLED setSensorData={this.props.setSensorData} ref={el => { this.element.oled = el; }} data={this.props.sensor.get(sensorName.OLED)} sensorName={sensorName.OLED} x={0.26 * this.board.bWidth} y={0.5136 * this.board.bHeight}
-                            w={0.4767 * this.board.bWidth} h={0.2353 * this.board.bHeight} />
-                        <Button setSensorData={this.props.setSensorData} ref={el => { this.element.buttonA = el; }} data={this.props.sensor.get(sensorName.BUTTON_A)} sensorName={sensorName.BUTTON_A} x={0.1140 * this.board.bWidth} y={0.6052 * this.board.bHeight} r={0.0363 * this.board.bWidth} />
-                        <Button setSensorData={this.props.setSensorData} ref={el => { this.element.buttonB = el; }} data={this.props.sensor.get(sensorName.BUTTON_B)} sensorName={sensorName.BUTTON_B} x={0.8912 * this.board.bWidth} y={0.6052 * this.board.bHeight} r={0.0363 * this.board.bWidth} />
-                        <LED setSensorData={this.props.setSensorData} ref={el => { this.element.led = el; }} data={this.props.sensor.get(sensorName.LED)} sensorName={sensorName.LED} x={0.1174 * this.board.bWidth} y={0.7251 * this.board.bHeight} r={0.0242 * this.board.bWidth} />
-                        <HTS221 setSensorData={this.props.setSensorData} ref={el => { this.element.hts221 = el; }} data={this.props.sensor.get(sensorName.HTS221)} sensorName={sensorName.HTS221} x={0.26 * this.board.bWidth} y={0.8136 * this.board.bHeight}
-                            w={0.09 * this.board.bWidth} h={0.0353 * this.board.bHeight} />
-                        <LSM6DSL setSensorData={this.props.setSensorData} ref={el => { this.element.lsm6dsl = el; }} data={this.props.sensor.get(sensorName.LSM6DSL)} sensorName={sensorName.LSM6DSL} x={0.45 * this.board.bWidth} y={0.8136 * this.board.bHeight}
-                            w={0.11 * this.board.bWidth} h={0.0353 * this.board.bHeight} />
+                    <Group ref={el => { this.element.board = el; }} draggable={true} x={this.state.selfX} y={this.state.selfY} width={this.state.board.bWidth} height={this.state.board.bHeight}>
+                        <KonvaImage shadowBlur={10} ref={el => { this.element.image = el; }} width={this.state.board.bWidth} height={this.state.board.bHeight} image={this.state.boardImage} />
+                        <OLED setSensorData={this.props.setSensorData} ref={el => { this.element.oled = el; }} data={this.props.sensor.get(sensorName.OLED)} sensorName={sensorName.OLED} x={0.26 * this.state.board.bWidth} y={0.5136 * this.state.board.bHeight}
+                            w={0.4767 * this.state.board.bWidth} h={0.2353 * this.state.board.bHeight} />
+                        <Button setSensorData={this.props.setSensorData} ref={el => { this.element.buttonA = el; }} data={this.props.sensor.get(sensorName.BUTTON_A)} sensorName={sensorName.BUTTON_A} x={0.1140 * this.state.board.bWidth} y={0.6052 * this.state.board.bHeight} r={0.0363 * this.state.board.bWidth} />
+                        <Button setSensorData={this.props.setSensorData} ref={el => { this.element.buttonB = el; }} data={this.props.sensor.get(sensorName.BUTTON_B)} sensorName={sensorName.BUTTON_B} x={0.8912 * this.state.board.bWidth} y={0.6052 * this.state.board.bHeight} r={0.0363 * this.state.board.bWidth} />
+                        <LED setSensorData={this.props.setSensorData} ref={el => { this.element.led = el; }} data={this.props.sensor.get(sensorName.LED)} sensorName={sensorName.LED} x={0.1174 * this.state.board.bWidth} y={0.7251 * this.state.board.bHeight} r={0.0242 * this.state.board.bWidth} />
+                        <HTS221 setSensorData={this.props.setSensorData} ref={el => { this.element.hts221 = el; }} data={this.props.sensor.get(sensorName.HTS221)} sensorName={sensorName.HTS221} x={0.26 * this.state.board.bWidth} y={0.8136 * this.state.board.bHeight}
+                            w={0.09 * this.state.board.bWidth} h={0.0353 * this.state.board.bHeight} />
+                        <LSM6DSL setSensorData={this.props.setSensorData} ref={el => { this.element.lsm6dsl = el; }} data={this.props.sensor.get(sensorName.LSM6DSL)} sensorName={sensorName.LSM6DSL} x={0.45 * this.state.board.bWidth} y={0.8136 * this.state.board.bHeight}
+                            w={0.11 * this.state.board.bWidth} h={0.0353 * this.state.board.bHeight} />
                     </Group>
                 </Layer>
             </Stage>
