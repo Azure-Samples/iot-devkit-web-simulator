@@ -145,7 +145,6 @@ class SampleRunner {
             }
             code = code.replace(/\[CONNECTION_STRING_PLACE_HOLDER\]/g,connectionString);
             code = code.replace(/\[TOPIC_PLACE_HOLDER\]/g,topic);
-            console.log(code)
             this.runningFunction = new Function('replaces' + prefix, code);
             this.runningFunction(Object.assign({
                 Client: ClientWrapper,

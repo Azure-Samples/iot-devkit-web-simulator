@@ -124,7 +124,7 @@ class OLED extends React.Component {
         }
     }
 
-    draw = (x, y, x0, y0, bmp) => {
+    draw = (x, y, x0, y0, bmp, external = true) => {
         var w = x0 - x;
         for (var i = 0; i < bmp.length; i++) {
             var _y, _x = i % w + x, _p = bmp[i];
@@ -148,6 +148,9 @@ class OLED extends React.Component {
                 _p >>= 1;
             }
         }
+        if(external) {
+            this.shape.draw();
+        }
     }
 
     printChar = (x, y, char) => {
@@ -158,7 +161,7 @@ class OLED extends React.Component {
         }
 
         var pixel = font[index];
-        this.draw(x * 8, y * 2, x * 8 + 8, y * 2 + 2, pixel);
+        this.draw(x * 8, y * 2, x * 8 + 8, y * 2 + 2, pixel, false);
     }
 
     print = (line, str, wrap) => {
@@ -192,8 +195,8 @@ class OLED extends React.Component {
     }
 
     initDraw = (canvasContext) => {
-        console.log('render start')
-        let start = +new Date();
+        // console.log('render start')
+        // let start = +new Date();
         let p = this.props.w / XX;
         if (window.Konva.SceneContext.prototype.isPrototypeOf(canvasContext)) {
             canvasContext.fillStyle = "#2d2d2d";
@@ -216,7 +219,7 @@ class OLED extends React.Component {
             }
 
         }
-        console.log('render end, ' + (+new Date() - start));
+        // console.log('render end, ' + (+new Date() - start));
     }
 
     componentDidMount() {

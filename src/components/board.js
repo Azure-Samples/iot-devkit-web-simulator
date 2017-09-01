@@ -52,10 +52,6 @@ class Board extends Component {
             b;
     }
 
-    componentDidUpdate() {
-        console.log('component update fired')
-    }
-
     throttle = (fn, delay, mustRunDelay) => {
         var timer = null;
         var t_start;

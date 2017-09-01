@@ -75,15 +75,15 @@ export const getAllProjects = () => {
 					format: "cpp",
                     data: localStorage.getItem(CONSTANTS.SHAKESHAKE_TOPIC) ? require('../data/ShakeShake/ShakeShake.ino').replace(/("{\\"topic\\":\\")[^\\]*(\\"}";)/, '$1' + localStorage.getItem(CONSTANTS.SHAKESHAKE_TOPIC) + '$2') : require('../data/ShakeShake/ShakeShake.ino'),
 				}),
-				"_iothub_client_sample_mqtt.h": Map({
+				"ShakeUI.h": Map({
 					type: "file",
 					format: "cpp",
-					data: require('../data/ShakeShake/_iothub_client_sample_mqtt.h'),
+					data: require('../data/ShakeShake/ShakeUI.h'),
 				}),
-				"_iothub_client_sample_mqtt.cpp": Map({
+				"ShakeUI.cpp": Map({
 					type: "file",
 					format: "cpp",
-					data: require('../data/ShakeShake/_iothub_client_sample_mqtt.cpp'),
+					data: require('../data/ShakeShake/ShakeUI.cpp'),
 				}),
 			}),
 		}),
