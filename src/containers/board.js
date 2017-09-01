@@ -1,10 +1,8 @@
 import { connect } from 'react-redux';
 import Board from '../components/board';
-import { setSensorData as setSensorData2 } from '../actions';
-import { Map,is } from 'immutable';
-
-window.mmm = Map;
-window.iii = is;
+import { setSensorData as setSensorData2, runSample, stopSample, appendConsoleLog } from '../actions';
+import { Map, is } from 'immutable';
+import SampleRunner from '../lib/sampleRunner';
 
 const mapStateToProps = (state) => ({
     switchOn: state.board.get('switchOn'),
@@ -14,6 +12,14 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
     setSensorData: (sensor, data) => {
         setSensorData2(dispatch, sensor, data);
+    },
+    resetBoard: () => {
+        SampleRunner.getInstance().stop();
+        stopSample(dispatch);
+        setTimeout(() => {
+            runSample(dispatch);
+            SampleRunner.getInstance().run(appendConsoleLog.bind(this, dispatch), appendConsoleLog.bind(this, dispatch));
+        }, 300)
     },
 })
 

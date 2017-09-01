@@ -26,6 +26,7 @@ export const switchHelp = (dispatch, on) => {
 
 // main
 export const runSample = (dispatch) => {
+    switchBoard(dispatch,true);
     dispatch({
         type: types.RUN_SAMPLE,
     });

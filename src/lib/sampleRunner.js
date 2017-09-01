@@ -146,13 +146,16 @@ class SampleRunner {
             code = code.replace(/\[CONNECTION_STRING_PLACE_HOLDER\]/g,connectionString);
             code = code.replace(/\[TOPIC_PLACE_HOLDER\]/g,topic);
             this.runningFunction = new Function('replaces' + prefix, code);
-            this.runningFunction(Object.assign({
+            setTimeout(()=>{
+                this.runningFunction(Object.assign({
                 Client: ClientWrapper,
                 Message: Message,
                 Protocol: Protocol,
                 msgCb: msgCb,
                 errCb: errCb,
             }, window.devkitPlayground));
+            },0);
+            
         } catch (err) {
             traceEvent('run-error', { error: err });
             errCb(err.message || JSON.stringify(err));

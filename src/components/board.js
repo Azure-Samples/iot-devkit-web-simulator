@@ -3,6 +3,7 @@ import { Layer, Stage, Group, Image as KonvaImage } from 'react-konva';
 import '../common.scss';
 import LED from './items/led';
 import Button from './items/button';
+import Reset from './items/reset';
 import OLED from './items/oled';
 import HTS221 from './items/hts221';
 import LSM6DSL from './items/lsm6dsl';
@@ -151,16 +152,16 @@ class Board extends Component {
                 <Layer >
                     <Group ref={el => { this.element.board = el; }} draggable={true} x={this.state.selfX} y={this.state.selfY} width={this.state.board.bWidth} height={this.state.board.bHeight}>
                         <KonvaImage shadowBlur={10} ref={el => { this.element.image = el; }} width={this.state.board.bWidth} height={this.state.board.bHeight} image={this.state.boardImage} />
-                        <OLED ref={el => { this.element.oled = el; }} sensorName={sensorName.OLED} x={0.2776 * this.state.board.bWidth} y={0.5687 * this.state.board.bHeight}
+                        <OLED switchOn={this.props.switchOn} ref={el => { this.element.oled = el; }} sensorName={sensorName.OLED} x={0.2776 * this.state.board.bWidth} y={0.5687 * this.state.board.bHeight}
                             w={0.4522 * this.state.board.bWidth} h={0.4522 * this.state.board.bWidth * 0.5} />
                         <Button setSensorData={this.props.setSensorData} ref={el => { this.element.buttonA = el; }} data={this.props.sensor.get(sensorName.BUTTON_A)} sensorName={sensorName.BUTTON_A} x={0.1275 * this.state.board.bWidth} y={0.6230 * this.state.board.bHeight} r={0.0320 * this.state.board.bWidth} />
                         <Button setSensorData={this.props.setSensorData} ref={el => { this.element.buttonB = el; }} data={this.props.sensor.get(sensorName.BUTTON_B)} sensorName={sensorName.BUTTON_B} x={0.8740 * this.state.board.bWidth} y={0.6230 * this.state.board.bHeight} r={0.0320 * this.state.board.bWidth} />
-                        <LED setSensorData={this.props.setSensorData} ref={el => { this.element.led = el; }} data={this.props.sensor.get(sensorName.LED)} sensorName={sensorName.LED} x={0.1224 * this.state.board.bWidth} y={0.7431 * this.state.board.bHeight} r={0.0242 * this.state.board.bWidth} />
+                        <LED switchOn={this.props.switchOn} setSensorData={this.props.setSensorData} ref={el => { this.element.led = el; }} data={this.props.sensor.get(sensorName.LED)} sensorName={sensorName.LED} x={0.1224 * this.state.board.bWidth} y={0.7431 * this.state.board.bHeight} r={0.0242 * this.state.board.bWidth} />
                         <HTS221 setSensorData={this.props.setSensorData} ref={el => { this.element.hts221 = el; }} data={this.props.sensor.get(sensorName.HTS221)} sensorName={sensorName.HTS221} x={0.26 * this.state.board.bWidth} y={0.8136 * this.state.board.bHeight}
                             w={0.09 * this.state.board.bWidth} h={0.0353 * this.state.board.bHeight} />
                         <LSM6DSL setSensorData={this.props.setSensorData} ref={el => { this.element.lsm6dsl = el; }} data={this.props.sensor.get(sensorName.LSM6DSL)} sensorName={sensorName.LSM6DSL} x={0.45 * this.state.board.bWidth} y={0.8136 * this.state.board.bHeight}
                             w={0.11 * this.state.board.bWidth} h={0.0353 * this.state.board.bHeight} />
-
+                        <Reset resetBoard={this.props.resetBoard} x={0.9413 * this.state.board.bWidth} y={0.2463 * this.state.board.bHeight} r={0.0267 * this.state.board.bWidth} />
                     </Group>
                 </Layer>
             </Stage>

@@ -390,7 +390,7 @@ function DoReceived() {
     app_status = 0;
 }
 async function ScrollTweet() {
-    if (msgBody != "" && buttonB.getSwitch()) {
+    if (msgBody != "" ) {
         msgStart += 16;
         if (msgStart >= msgBody.length) {
             msgStart = 0;

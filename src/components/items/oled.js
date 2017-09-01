@@ -148,7 +148,7 @@ class OLED extends React.Component {
                 _p >>= 1;
             }
         }
-        if(external) {
+        if (external) {
             this.shape.draw();
         }
     }
@@ -170,13 +170,13 @@ class OLED extends React.Component {
             wrap = str;
             line = 0;
         }
-        this._clearRect(0, line * YY /4, XX, (line + 1) * YY /4);
+        this._clearRect(0, line * YY / 4, XX, (line + 1) * YY / 4);
 
         var c = 0;
         for (var i = 0; i < str.length; i++) {
             if (str[i] === '\n' || c >= 16 && wrap) {
                 line++;
-                this._clearRect(0, line * YY /4, XX, (line + 1) * YY /4);
+                this._clearRect(0, line * YY / 4, XX, (line + 1) * YY / 4);
                 c = 0;
                 i--;
             } else {
@@ -195,29 +195,31 @@ class OLED extends React.Component {
     }
 
     initDraw = (canvasContext) => {
-        // console.log('render start')
         // let start = +new Date();
         let p = this.props.w / XX;
         if (window.Konva.SceneContext.prototype.isPrototypeOf(canvasContext)) {
             canvasContext.fillStyle = "#2d2d2d";
             canvasContext.fillRect(0, 0, XX * p, YY * p);
-            canvasContext.fillStyle = "#ffc000";
-            for (let j = 0; j < YY / 4; j++) {
-                for (let i = 0; i < XX; i++) {
-                    if (this.pixels[j * XX + i]) {
-                        canvasContext.fillRect(i * p, j * p, p, p);
+            if (this.props.switchOn) {
+                canvasContext.fillStyle = "#ffc000";
+                for (let j = 0; j < YY / 4; j++) {
+                    for (let i = 0; i < XX; i++) {
+                        if (this.pixels[j * XX + i]) {
+                            canvasContext.fillRect(i * p, j * p, p, p);
+                        }
                     }
                 }
-            }
-            canvasContext.fillStyle = "#00ffff";
-            for (let j = YY / 4; j < YY; j++) {
-                for (let i = 0; i < XX; i++) {
-                    if (this.pixels[j * XX + i]) {
-                        canvasContext.fillRect(i * p, j * p, p, p);
+                canvasContext.fillStyle = "#00ffff";
+                for (let j = YY / 4; j < YY; j++) {
+                    for (let i = 0; i < XX; i++) {
+                        if (this.pixels[j * XX + i]) {
+                            canvasContext.fillRect(i * p, j * p, p, p);
+                        }
                     }
                 }
+            }else {
+                this.pixels.fill(false);
             }
-
         }
         // console.log('render end, ' + (+new Date() - start));
     }
@@ -228,7 +230,7 @@ class OLED extends React.Component {
 
     render() {
         return (
-            <Shape ref={el => { this.shape = el; }} sceneFunc={this.initDraw} fill="black" x={this.props.x} y={this.props.y} width={this.props.w} height={this.props.h} />
+            <Shape ref={el => { this.shape = el; }} sceneFunc={this.initDraw} x={this.props.x} y={this.props.y} width={this.props.w} height={this.props.h} />
         );
     }
 }
