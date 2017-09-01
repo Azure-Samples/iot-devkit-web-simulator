@@ -19,11 +19,11 @@ class LSM6DSL extends React.Component {
     render() {
         return (
             <Group>
-                <Rect
+                {/*<Rect
                     x={this.props.x} y={this.props.y} width={this.props.w} height={this.props.h}
                     fill={"black"} />
                 <Text x={this.props.x} y={this.props.y} width={this.props.w} lineHeight={this.props.h / 4} padding={2} text={this.props.sensorName} fill="white" fontSize={8} />
-                <Text x={this.props.x} y={this.props.y + this.props.h / 2} width={this.props.w} lineHeight={this.props.h / 4} padding={2} text={Math.round(this.props.data.get('x')) + " / " + Math.round(this.props.data.get('y'))} fill="white" fontSize={8} />
+                <Text x={this.props.x} y={this.props.y + this.props.h / 2} width={this.props.w} lineHeight={this.props.h / 4} padding={2} text={Math.round(this.props.data.get('x')) + " / " + Math.round(this.props.data.get('y'))} fill="white" fontSize={8} />*/}
             </Group>
         );
     }

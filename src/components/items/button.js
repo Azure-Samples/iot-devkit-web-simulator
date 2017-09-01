@@ -18,7 +18,7 @@ class Button extends React.Component {
     render() {
         return (
             <Circle
-                x={this.props.x} y={this.props.y} radius={this.props.r} fill={this.props.data.get('down') ? "black" : "grey"}
+                x={this.props.x} y={this.props.y} radius={this.props.r} fill={this.props.data.get('down') ? "black" : ""}
                 onMouseDown={this.handleDown} onMouseUp={this.handleUp}
             />
         );

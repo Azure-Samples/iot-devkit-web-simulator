@@ -31,7 +31,7 @@ class LED extends React.Component {
         return (
             <Circle
                 x={this.props.x} y={this.props.y} radius={this.props.r}
-                fill={this.props.data.get('on') ? colorHex : "black"}
+                fill={this.props.data.get('on') ? colorHex : "white"}
             />
         );
     }
