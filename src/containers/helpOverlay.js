@@ -1,14 +1,15 @@
 import { connect } from 'react-redux';
 import HelpOverlay from '../components/helpOverlay';
-import { switchHelp } from '../actions';
+import { switchGuide } from '../actions';
 
 const mapStateToProps = (state) => ({
-    needShowHelp: state.help.get('showHelp'),
+    guideId: state.main.get('guideId'),
+    guidePosition: state.main.get('guidePosition').get(state.main.get('guideId')),
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    switchHelp: () => {
-        switchHelp(dispatch, false);
+    switchGuide: () => {
+        switchGuide(dispatch, false);
     }
 })
 

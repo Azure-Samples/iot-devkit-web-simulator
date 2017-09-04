@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import Banner from '../components/banner';
-import { switchHelp } from '../actions'
+import { switchGuide } from '../actions'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    switchHelp: () => {
-        switchHelp(dispatch, true);
+    switchGuide: (id) => {
+        switchGuide(dispatch, id);
     }
 })
 

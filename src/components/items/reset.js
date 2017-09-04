@@ -7,7 +7,7 @@ class Reset extends React.Component {
         return (
             <Circle
                 x={this.props.x} y={this.props.y} radius={this.props.r}
-                onClick={this.props.resetBoard} fill="white"
+                onMouseDown={this.props.resetBoard}
             />
         );
     }

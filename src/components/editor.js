@@ -20,7 +20,7 @@ class Editor extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(prevProps.data !== this.props.data || prevProps.language !== this.props.language && this.editor) {
+        if (prevProps.data !== this.props.data || prevProps.language !== this.props.language && this.editor) {
             this.editor.setValue(this.props.data);
             this.editor.updateOptions({
                 language: this.props.language,
@@ -29,12 +29,15 @@ class Editor extends Component {
     }
 
     componentDidMount() {
-
+        let { top, left, right, bottom, width, height } = this.refs.editor.getBoundingClientRect();
+        this.props.setComponentSize({
+            top, left, right, bottom, width, height,
+        });
     }
 
     render() {
         return (
-            <div id="editor-container" className="editor-container" >
+            <div ref="editor" id="editor-container" className={`editor-container ${this.props.highlight && 'highlight'}`} >
                 <Script
                     url="vs/loader.js"
                     onLoad={this.editorDidMount}

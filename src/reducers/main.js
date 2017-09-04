@@ -3,13 +3,19 @@ import {
     STOP_SAMPLE,
     APPEND_CONSOLE_LOG,
     SHOW_RUNNING_INFO,
+    SWITCH_HELP,
+    SET_COMPONENT_SIZE,
 } from '../constants/actionTypes';
-import { Map } from 'immutable';
+import * as GUIDE from '../constants/guide';
+
+import { Map, List } from 'immutable';
 
 const initialState = Map({
     isSampleRunning: false,
     runningInfo: "",
     consoleMessage: "",
+    guideId: GUIDE.CONTROL_BAR,
+    guidePosition: List(new Array(GUIDE.END)),
 });
 
 const main = (state = initialState, action) => {
@@ -22,6 +28,10 @@ const main = (state = initialState, action) => {
             return state.update('consoleMessage', value => value + action.data);
         case SHOW_RUNNING_INFO:
             return state.set('runningInfo', action.data);
+        case SWITCH_HELP:
+            return state.set('guideId', action.data);
+        case SET_COMPONENT_SIZE:
+            return state.update('guidePosition', oriList => oriList.set(action.id,action.size));
         default:
             return state;
     }

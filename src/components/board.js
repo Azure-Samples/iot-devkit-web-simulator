@@ -75,11 +75,14 @@ class Board extends Component {
     };
 
     componentDidMount() {
+        let { top, left, right, bottom, width, height } = this.stage.domNode.getBoundingClientRect();
+        this.props.setComponentSize({
+            top, left, right, bottom, width, height,
+        });
         let cHeight = this.stage.domNode.offsetHeight;
         let cWidth = this.stage.domNode.offsetWidth;
         let bHeight = cHeight * 0.8;
         let bWidth = bHeight / 611.0 * 400.0;
-        console.log(bWidth,bHeight);
         let st = this.stage.getStage();
         st.height(cHeight);
         st.width(cWidth);
@@ -149,7 +152,7 @@ class Board extends Component {
 
     render() {
         return (
-            <Stage ref={el => { this.stage = el; }} className="board-container" width={this.state.board.cWidth} height={this.state.board.cHeight} >
+            <Stage ref={el => { this.stage = el; }} className={`board-container ${this.props.highlight && 'highlight'}`} width={this.state.board.cWidth} height={this.state.board.cHeight} >
                 <Layer >
                     <Group ref={el => { this.element.board = el; }} draggable={true} x={this.state.selfX} y={this.state.selfY} width={this.state.board.bWidth} height={this.state.board.bHeight}>
                         <KonvaImage shadowBlur={10} ref={el => { this.element.image = el; }} width={this.state.board.bWidth} height={this.state.board.bHeight} image={this.state.boardImage} />

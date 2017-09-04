@@ -16,15 +16,22 @@ export const setSensorData = (dispatch, sensor, data) => {
     });
 };
 
-// help
-export const switchHelp = (dispatch, on) => {
+// main
+export const switchGuide = (dispatch, id) => {
     dispatch({
         type: types.SWITCH_HELP,
-        data: on,
+        data: id,
     });
 };
 
-// main
+export const setComponentSize = (dispatch, id, size) => {
+    dispatch({
+        type: types.SET_COMPONENT_SIZE,
+        id,
+        size,
+    });
+};
+
 export const runSample = (dispatch) => {
     switchBoard(dispatch,true);
     dispatch({

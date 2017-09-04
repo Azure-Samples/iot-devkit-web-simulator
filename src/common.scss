@@ -400,7 +400,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.2);
     /* Black background with opacity */
     z-index: 5;
     /* Specify a stack order in case you're using a different order for other elements */
@@ -655,4 +655,10 @@ body {
 
 .no-underline {
     text-decoration: none;
+}
+
+.highlight {
+    z-index: 7;
+    border: 2px solid yellow;
+    background: white;
 }

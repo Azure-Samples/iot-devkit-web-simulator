@@ -91,11 +91,11 @@ class SampleRunner {
         const topic = store.getState().project.getIn(['currentProject', 'config', 'topic']);
         if (connectionString === '') {
             showRunningInfo(store.dispatch, 'Please provision cloud service and then provide the connection string');
-            return;
+            return 1;
         }
         if (! /^HostName=([^;]*);DeviceId=([^;]*);SharedAccessKey=(.*)$/.test(connectionString)) {
             showRunningInfo(store.dispatch, 'Invalid format for connection string');
-            return;
+            return 2;
         }
         runSample(store.dispatch);
         showRunningInfo(store.dispatch, '');
@@ -159,7 +159,10 @@ class SampleRunner {
         } catch (err) {
             traceEvent('run-error', { error: err });
             errCb(err.message || JSON.stringify(err));
+            return 3;
         }
+
+        return 0;
     }
 }
 

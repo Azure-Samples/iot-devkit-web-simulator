@@ -29,6 +29,26 @@ class Project extends Component {
         }
     }
 
+    componentDidMount() {
+        {
+            let { top, left, right, bottom, width, height } = this.refs.project.getBoundingClientRect();
+            this.props.setProjectComponentSize({
+                top, left, right, bottom, width, height,
+            });
+        }
+        {
+            let { top, left, right, bottom, width, height } = this.refs.configCloud.getBoundingClientRect();
+            this.props.setConfigCloudComponentSize({
+                top, left, right, bottom, width, height,
+            });
+        } {
+            let { top, left, right, bottom, width, height } = this.refs.configLocal.getBoundingClientRect();
+            this.props.setConfigLocalComponentSize({
+                top, left, right, bottom, width, height,
+            });
+        }
+    }
+
     initState(state, files, root, folderName) {
         for (let [k, v] of files) {
             if (v.get('type') === 'directory') {
@@ -66,6 +86,9 @@ class Project extends Component {
             }
         })
         this.props.setEditorPath(path);
+        if (this.props.highlightProject) {
+            this.props.nextGuideAfterProject();
+        }
     }
 
     handleChange = (key, event) => {
@@ -97,6 +120,7 @@ class Project extends Component {
                 configureChanged: false,
             };
         });
+        this.props.nextGuideAfterConfigLocal();
     }
 
     renderProjects(allProjects) {
@@ -132,8 +156,8 @@ class Project extends Component {
 
     render() {
         let deployItem;
-        if(this.props.project.has('deployLink')) {
-            deployItem = <span className="configure-deploy-link" ><a target="_blank" href={this.props.project.get('deployLink')} ><i className="fa fa-cloud-upload" aria-hidden="true"></i>deploy</a></span>
+        if (this.props.project.has('deployLink')) {
+            deployItem = <div ref="configCloud" className={`configure-deploy-link ${this.props.highlightConfigCloud && 'highlight'}`}><a target="_blank" className={`${this.props.nextGuideAfterConfigCloud && 'highlight'}`} href={this.props.project.get('deployLink')} ><i className="fa fa-cloud-upload" aria-hidden="true"></i>deploy</a></div>
         }
         let configureItems = [];
         for (let [k, v] of this.props.project.get('config')) {
@@ -147,18 +171,18 @@ class Project extends Component {
         return (
             <div className="project-container">
                 <div className={`current-project ${this.state.collapseProjectSelector ? "hide-items" : "show-items"}`} onClick={this.toggleProjectSelectorCollapsed}>
-                    <i className={`fa ${this.state.collapseProjectSelector ? "fa-caret-down" : "fa-caret-up" }`} aria-hidden="true"></i>
+                    <i className={`fa ${this.state.collapseProjectSelector ? "fa-caret-down" : "fa-caret-up"}`} aria-hidden="true"></i>
                     {this.props.project.get('displayName')}
                     <div className="project-items-container" >
                         {this.renderProjects(this.props.allProjects)}
                     </div>
                 </div>
 
-                <div className="project-explorer">
+                <div ref="project" className={`project-explorer ${this.props.highlightProject && 'highlight'}`} >
                     {this.renderItems(this.props.project.get('files'), true)}
                 </div>
 
-                <div className="configure-container" >
+                <div ref="configLocal" className={`configure-container ${this.props.highlightConfigLocal && 'highlight'}`} >
                     <div className="configure-container-header" >
                         <span className="configure-container-title">Configure</span>
                         <span className={`configure-button ${this.state.configureChanged ? '' : 'hide'}`}>
