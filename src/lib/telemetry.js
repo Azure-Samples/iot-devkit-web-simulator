@@ -4,8 +4,8 @@ import ga from 'react-ga';
 
 const pkg = require('../../package.json');
 
-const intrumentKey = '34331cb5-8b57-4d57-b523-3db743d219a7';
-const googleAnalticsKey = 'UA-98097460-3';
+const intrumentKey = '76c785d0-bf63-4b98-9fa7-9294dba6beb5';
+const googleAnalticsKey = 'UA-98097460-4';
 
 const userProperties = {
   project: getAppName(),
