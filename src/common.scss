@@ -75,7 +75,6 @@ body {
             background: $color-background-lightgrey;
             $padding-left-right: 20px;
             $font-size: 16px;
-            
             line-height: 32px;
             font-size: $font-size;
             display: flex;
@@ -204,6 +203,28 @@ body {
                         opacity: 0;
                         visibility: hidden;
                         transition: $animation-long;
+                    }
+                }
+                .configure-deploy-link {
+                    padding: 10px 20px;
+                    display: flex;
+                    align-content: stretch;
+                    a {
+                        width: 50%;
+                        border: 2px solid #858585;
+                        color: #858585;
+                        text-decoration: none;
+                        text-align: center;
+                        font-weight: 600;
+                        transition: $animation-long;
+                        &:hover {
+                            background: #858585;
+                            color: #f4f4f4;
+                        }
+
+                        .fa {
+                            margin-right: 10px;
+                        }
                     }
                 }
                 .configure-item {

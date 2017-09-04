@@ -24,7 +24,7 @@ var shake_progress;
 var hb_interval_ms=SystemTickCounterRead();
 var tweet_timeout_ms;
 var idx = 0;
-const RGB_LED_BRIGHTNESS = 32;
+const RGB_LED_BRIGHTNESS = 256;
 const HEARTBEAT_INTERVAL = 300000;
 const PULL_TIMEOUT = 15000;
 const SCROLL_OFFSET = 16;
@@ -289,7 +289,7 @@ async function setup() {
         sendingMessage = true;
         hb_interval_ms = -(HEARTBEAT_INTERVAL);   // Trigger heart beat immediately
         HeartBeat();
-        rgbLed.setColor(0, 0, 0);
+        rgbLed.turnOff();
         // todo turn on azure led
         Screen.print(1,"192.168.1.1");
         Screen.print(2, "Press A to Shake!");

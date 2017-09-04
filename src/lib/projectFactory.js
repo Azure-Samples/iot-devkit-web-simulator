@@ -49,6 +49,7 @@ export const getAllProjects = () => {
                 connectionString: localStorage.getItem(CONSTANTS.SHAKESHAKE_CONNECTIONSTRING) ? localStorage.getItem(CONSTANTS.SHAKESHAKE_CONNECTIONSTRING) : "",
                 topic: localStorage.getItem(CONSTANTS.SHAKESHAKE_TOPIC) ? localStorage.getItem(CONSTANTS.SHAKESHAKE_TOPIC) : "song",
             }),
+            deployLink: "https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fiot-devkit-web-simulator%2Fsource%2Fsrc%2Fdata%2FShakeShake%2FazureDeploy.json",
 			files: Map({
 				"azureFunction": Map({
 					type: "directory",

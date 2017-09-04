@@ -79,6 +79,7 @@ class Board extends Component {
         let cWidth = this.stage.domNode.offsetWidth;
         let bHeight = cHeight * 0.8;
         let bWidth = bHeight / 611.0 * 400.0;
+        console.log(bWidth,bHeight);
         let st = this.stage.getStage();
         st.height(cHeight);
         st.width(cWidth);

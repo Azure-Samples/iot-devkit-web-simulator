@@ -131,6 +131,10 @@ class Project extends Component {
     }
 
     render() {
+        let deployItem;
+        if(this.props.project.has('deployLink')) {
+            deployItem = <span className="configure-deploy-link" ><a target="_blank" href={this.props.project.get('deployLink')} ><i className="fa fa-cloud-upload" aria-hidden="true"></i>deploy</a></span>
+        }
         let configureItems = [];
         for (let [k, v] of this.props.project.get('config')) {
             configureItems.push(
@@ -162,6 +166,7 @@ class Project extends Component {
                             <span onClick={this.revertConfig}><i className="fa fa-undo" aria-hidden="true"></i></span>
                         </span>
                     </div>
+                    {deployItem}
                     {configureItems}
                 </div>
             </div>
