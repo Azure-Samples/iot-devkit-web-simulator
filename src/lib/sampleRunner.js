@@ -87,6 +87,8 @@ class SampleRunner {
     run(msgCb, errCb) {
         // a prefix of UUID to avoid name conflict, here just use a fix one
         const prefix = '76f98350';
+        let sampleName = store.getState().project.getIn(['currentProject', 'displayName']);
+        traceEvent('sample-run', { 'sample-name': sampleName });
         const connectionString = store.getState().project.getIn(['currentProject', 'config', 'connectionString']);
         const topic = store.getState().project.getIn(['currentProject', 'config', 'topic']);
         if (connectionString === '') {
@@ -110,9 +112,9 @@ class SampleRunner {
                 src: /require\('azure-iot-device-mqtt'\)\.Mqtt/g,
                 dest: 'Protocol'
             }, {
-            //     src: /console\.log/g,
-            //     dest: 'msgCb'
-            // }, {
+                //     src: /console\.log/g,
+                //     dest: 'msgCb'
+                // }, {
                 src: /console\.error/g,
                 dest: 'errCb'
             }, {
@@ -133,7 +135,10 @@ class SampleRunner {
             }, {
                 src: /require\('lsm6dsl'\)/g,
                 dest: 'lsm6dsl'
-            }, 
+            }, {
+                src: /require\('traceEvent'\)/g,
+                dest: 'traceEvent'
+            },
         ];
 
         try {
@@ -143,21 +148,22 @@ class SampleRunner {
                 var replace = replaces[i];
                 code = code.replace(replace.src, 'replaces' + prefix + '.' + replace.dest);
             }
-            code = code.replace(/\[CONNECTION_STRING_PLACE_HOLDER\]/g,connectionString);
-            code = code.replace(/\[TOPIC_PLACE_HOLDER\]/g,topic);
+            code = code.replace(/\[CONNECTION_STRING_PLACE_HOLDER\]/g, connectionString);
+            code = code.replace(/\[TOPIC_PLACE_HOLDER\]/g, topic);
             this.runningFunction = new Function('replaces' + prefix, code);
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.runningFunction(Object.assign({
-                Client: ClientWrapper,
-                Message: Message,
-                Protocol: Protocol,
-                msgCb: msgCb,
-                errCb: errCb,
-            }, window.devkitPlayground));
-            },0);
-            
+                    Client: ClientWrapper,
+                    Message: Message,
+                    Protocol: Protocol,
+                    msgCb: msgCb,
+                    errCb: errCb,
+                    traceEvent: traceEvent,
+                }, window.devkitPlayground));
+            }, 0);
+
         } catch (err) {
-            traceEvent('run-error', { error: err });
+            traceEvent('connect-fail', { 'sample-name': sampleName, reason: err });
             errCb(err.message || JSON.stringify(err));
             return 3;
         }

@@ -8,8 +8,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    switchGuide: () => {
-        switchGuide(dispatch, false);
+    switchGuide: (id) => {
+        switchGuide(dispatch, id);
     }
 })
 

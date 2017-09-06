@@ -10,6 +10,7 @@ var buttonB = require('buttonB');
 var Screen = require('oled');
 var HTS221 = require('hts221');
 var LSM6DSL = require('lsm6dsl');
+var traceEvent = require('traceEvent');
 const connectionString = '[CONNECTION_STRING_PLACE_HOLDER]';
 var sendingMessage = false;
 var messageId = 0;
@@ -316,6 +317,7 @@ async function DoShake() {
         // todo user led light on
         rgbLed.setColor(RGB_LED_BRIGHTNESS, 0, 0);
         ShowShakeProgress();
+        traceEvent('shake-success');
 
         await delay(1000);
 

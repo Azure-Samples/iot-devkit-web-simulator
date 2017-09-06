@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { List, is, Map } from 'immutable';
+import { traceEvent } from '../lib/telemetry';
 
 import '../common.scss'
 
@@ -7,12 +8,14 @@ class Project extends Component {
     constructor(props) {
         super(props);
         let file = this.props.project.get('files').findEntry(v => v.get('type') === 'file');
+        this.firstFile = file[0];
         this.state = {
             folders: {}, // collapsed,
             collapseProjectSelector: true,
             selectedFilePath: List().push(file[0]),
             configureChanged: false,
             config: this.props.project.get('config').toJS(),
+            csError: false,
         };
         this.initState(this.state.folders, this.props.project.get('files'), true);
     }
@@ -32,19 +35,27 @@ class Project extends Component {
     componentDidMount() {
         {
             let { top, left, right, bottom, width, height } = this.refs.project.getBoundingClientRect();
+            let firstFileSize = this.firstFileRef.getBoundingClientRect();
+            let dotX = firstFileSize.left + firstFileSize.width / 2;
+            let dotY = firstFileSize.top + firstFileSize.height / 2;
             this.props.setProjectComponentSize({
-                top, left, right, bottom, width, height,
+                top, left, right, bottom, width, height, dotX, dotY,
             });
         }
         {
             let { top, left, right, bottom, width, height } = this.refs.configCloud.getBoundingClientRect();
+            let dotX = left + width / 2 - 20;
+            let dotY = top + height / 2;
             this.props.setConfigCloudComponentSize({
-                top, left, right, bottom, width, height,
+                top, left, right, bottom, width, height, dotX, dotY,
             });
         } {
             let { top, left, right, bottom, width, height } = this.refs.configLocal.getBoundingClientRect();
+            let csInput = this.connectionStringInput.getBoundingClientRect();
+            let dotX = csInput.right - 20;
+            let dotY = csInput.top + csInput.height / 2;
             this.props.setConfigLocalComponentSize({
-                top, left, right, bottom, width, height,
+                top, left, right, bottom, width, height, dotX, dotY,
             });
         }
     }
@@ -102,6 +113,15 @@ class Project extends Component {
                 config: newConfig,
             };
         });
+        if (this.props.highlightConfigLocal) {
+            let { top, left, right, bottom, width, height } = this.refs.configLocal.getBoundingClientRect();
+            let saveIcon = this.refs.saveConfig.getBoundingClientRect();
+            let dotX = saveIcon.left + saveIcon.width / 2;
+            let dotY = saveIcon.bottom;
+            this.props.setConfigLocalComponentSize({
+                top, left, right, bottom, width, height, dotX, dotY,
+            });
+        }
     }
 
     revertConfig = () => {
@@ -114,13 +134,38 @@ class Project extends Component {
     }
 
     saveConfig = () => {
+        if (! /^HostName=([^;]*);DeviceId=([^;]*);SharedAccessKey=(.*)$/.test(this.state.config.connectionString)) {
+            this.setState({ csError: true });
+            if (this.props.highlightConfigLocal) {
+                this.props.nextGuideForConfigError();
+                let { top, left, right, bottom, width, height } = this.refs.configLocal.getBoundingClientRect();
+                let csInput = this.connectionStringInput.getBoundingClientRect();
+                let dotX = csInput.right - 20;
+                let dotY = csInput.top + csInput.height / 2;
+                this.props.setConfigLocalComponentSize({
+                    top, left, right, bottom, width, height, dotX, dotY,
+                });
+            }
+            return;
+        }
+        if (this.props.project.get('config').get('connectionString') !== this.state.config) {
+            traceEvent('cs-filled');
+        }
         this.props.setProjectConfig(this.state.config);
         this.setState(() => {
             return {
+                csError: false,
                 configureChanged: false,
             };
         });
-        this.props.nextGuideAfterConfigLocal();
+        if (this.props.highlightConfigLocal || this.props.highlightError) {
+            this.props.nextGuideAfterConfigLocal();
+        }
+    }
+
+    deployClick = () => {
+        traceEvent('deploy-clicked');
+        this.props.nextGuideAfterConfigCloud();
     }
 
     renderProjects(allProjects) {
@@ -132,7 +177,7 @@ class Project extends Component {
     }
 
     renderFile(key, value, path) {
-        return <div key={key} onClick={this.fileClicked.bind(this, path)} className={`project-file ${(is(this.state.selectedFilePath, path)) ? 'project-file-selected' : ''}`}>{key}</div>;
+        return <div ref={el => { if (path.size === 1 && path.get(0) === this.firstFile) this.firstFileRef = el; }} key={key} onClick={this.fileClicked.bind(this, path)} className={`project-file ${(is(this.state.selectedFilePath, path)) ? 'project-file-selected' : ''}`}>{key}</div>;
     }
 
     renderItems(files, root, folderName, path = List()) {
@@ -157,14 +202,14 @@ class Project extends Component {
     render() {
         let deployItem;
         if (this.props.project.has('deployLink')) {
-            deployItem = <div ref="configCloud" className={`configure-deploy-link ${this.props.highlightConfigCloud && 'highlight'}`}><a target="_blank" className={`${this.props.nextGuideAfterConfigCloud && 'highlight'}`} href={this.props.project.get('deployLink')} ><i className="fa fa-cloud-upload" aria-hidden="true"></i>deploy</a></div>
+            deployItem = <div ref="configCloud" className={`configure-deploy-link`}><a onClick={this.deployClick} target="_blank" className={`${this.props.highlightConfigCloud && 'highlight'}`} href={this.props.project.get('deployLink')} ><i className="fa fa-cloud-upload" aria-hidden="true"></i>Deploy</a></div>
         }
         let configureItems = [];
         for (let [k, v] of this.props.project.get('config')) {
             configureItems.push(
                 <div key={k} className="configure-item" >
                     <div className="configure-item-key">{k}</div>
-                    <input type="text" className="configure-item-value" value={this.state.config[k]} onChange={this.handleChange.bind(this, k)} />
+                    <input ref={el => { if (k === 'connectionString') this.connectionStringInput = el; }} type="text" className={`configure-item-value ${k === 'connectionString' && this.state.csError && 'cs-error'}`} value={this.state.config[k]} onChange={this.handleChange.bind(this, k)} />
                 </div>
             );
         }
@@ -182,11 +227,11 @@ class Project extends Component {
                     {this.renderItems(this.props.project.get('files'), true)}
                 </div>
 
-                <div ref="configLocal" className={`configure-container ${this.props.highlightConfigLocal && 'highlight'}`} >
+                <div ref="configLocal" className={`configure-container ${(this.props.highlightConfigLocal || this.props.highlightConfigCloud || this.props.highlightError) && 'highlight'}`} >
                     <div className="configure-container-header" >
                         <span className="configure-container-title">Configure</span>
                         <span className={`configure-button ${this.state.configureChanged ? '' : 'hide'}`}>
-                            <span onClick={this.saveConfig}><i className="fa fa-floppy-o" aria-hidden="true"></i></span>
+                            <span ref="saveConfig" onClick={this.saveConfig}><i className="fa fa-floppy-o" aria-hidden="true"></i></span>
                             <span onClick={this.revertConfig}><i className="fa fa-undo" aria-hidden="true"></i></span>
                         </span>
                     </div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import rpiLogo from '../img/rpi-logo.png'
 import HelpButton from './helpButton';
 import Localization from '../localization/localization';
+import { traceEvent } from '../lib/telemetry';
 import '../common.scss';
 
 class Banner extends Component {
@@ -12,7 +13,7 @@ class Banner extends Component {
         <span>{window.innerWidth<=768?Localization.getLocalizedString().pageTitleMobile:Localization.getLocalizedString().pageTitle}</span>
         <HelpButton 
           switchGuide = {this.props.switchGuide} />
-        <a className="no-underline banner-button buy-link" target="_blank" href="http://mxchip.com/az3166" ><i className="fa fa-shopping-cart" aria-hidden="true"></i>Buy</a>  
+        <a onClick={traceEvent.bind(this,'buy-clicked')} className="no-underline banner-button buy-link" target="_blank" href="http://mxchip.com/az3166" ><i className="fa fa-shopping-cart" aria-hidden="true"></i>Buy</a>  
       </div>
     );
   }

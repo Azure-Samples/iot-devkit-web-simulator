@@ -20,112 +20,40 @@ class App extends Component {
         super(props);
         tracePageView();
         tracePageViewAI();
-        // this.state = {
-        //     console: {
-        //         consoleMsg: '',
-        //         consoleErr: '',
-        //     },
-        //     LEDTurnOn: false,
-        //     isRunning: false,
-        //     showHelp: false
-        // }
-        if (typeof (Storage) !== "undefined") {
-            var disableHelp = localStorage.getItem("disable-help");
-            if (disableHelp == null) {
-                traceEvent('help-open-first');
-                // this.state.showHelp = true;
-                localStorage.setItem("disable-help", "true");
-            }
-        }
-        // this.runApp = this.runApp.bind(this);
-        // this.ledSwitch = this.ledSwitch.bind(this);
-        // this.onError = this.onError.bind(this);
-        // this.onMessage = this.onMessage.bind(this);
-        // this.onFinish = this.onFinish.bind(this);
     }
 
-    // runApp() {
-    //     if (this.state.isRunning) { return; }
+    componentDidMount() {
+        let { top, left, right, bottom, width, height } = this.refs.rightContainer.getBoundingClientRect();
+        this.props.setComponentSize({
+            top, left, right, bottom, width, height,
+            dotX: -100,
+            dotY: -100,
+        });
+        if (!localStorage.getItem('disable-help')) {
+            localStorage.setItem('disable-help', '1');
+            this.props.openGuide();
+        }
+    }
 
-    //     var option = {
-    //         onMessage: this.onMessage,
-    //         onError: this.onError,
-    //         ledSwitch: this.ledSwitch,
-    //         turnOff: this.turnOff,
-    //         onFinish: this.onFinish
-    //     }
-
-    //     this.setState(function () {
-    //         return {
-    //             isRunning: true,
-    //             console: {}
-    //         }
-    //     });
-    //     this.sample = new Sample();
-    //     this.sample.run(option);
-    // }
-
-    // stopApp = () => {
-    //     this.onMessage(Localization.getLocalizedString().consoleSampleStopped + '.');
-    //     this.sample.stop();
-    //     this.onFinish();
-    // }
-
-    // onMessage(message) {
-    //     this.setState(function () {
-    //         return {
-    //             console: {
-    //                 consoleMsg: message
-    //             }
-    //         };
-    //     });
-    // }
-    // onError(error) {
-    //     this.setState(function () {
-    //         return {
-    //             console: {
-    //                 consoleErr: error.message || JSON.stringify(error)
-    //             }
-    //         };
-    //     });
-    // }
     render() {
-        // const { console, LEDTurnOn, isRunning, showHelp } = this.state;
         return (
             <div className='main'>
                 <Banner />
                 <div className='main-container'>
                     <Project />
                     <div className='center-container'>
-                    <ControlBar />
-                    <Editor />
+                        <ControlBar />
+                        <Editor />
                     </div>
-                    <div className='right-container'>
+                    <div ref="rightContainer" className={`right-container ${this.props.highlight && 'highlight'}`} >
                         <Board />
                         <div className="get-a-kit">
-                            <a className="no-underline" target="_blank" href="http://mxchip.com/az3166" >Get a kit</a>  
-                            </div>
+                            <a onClick={traceEvent.bind(this, 'buy-clicked')} className="no-underline" target="_blank" href="http://mxchip.com/az3166" >Get a kit</a>
+                        </div>
                         <MyConsole />
                     </div>
                 </div>
                 <HelpOverlay />
-
-                {/*<Banner 
-        toggleHelpState = {this.toggleHelpState} />
-        {
-          1 === 0 ? (<Toolbar onRunApp={this.runApp} />) : ('')
-        }
-        <Display
-          consoleMsg={console.consoleMsg}
-          consoleErr={console.consoleErr}
-          onStart={this.runApp}
-          onStop={this.stopApp}
-          isRunning={isRunning}
-          turnOn={LEDTurnOn} />
-        
-        <HelpOverlay
-          needShowHelp = {showHelp}
-          toggleHelpState = {this.toggleHelpState} />*/}
             </div>
         );
     }

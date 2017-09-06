@@ -5,15 +5,25 @@ import Localization from '../localization/localization';
 class ControlBar extends Component {
     componentDidMount() {
         let { top, left, right, bottom, width, height } = this.refs.controlBar.getBoundingClientRect();
+        let dotX = right - 20;;
+        let dotY = top + height / 2;
         this.props.setComponentSize({
-            top, left, right, bottom, width, height,
+            top, left, right, bottom, width, height, dotX, dotY,
         });
     }
-    
+
+    handleClick = () => {
+        if (this.props.isSampleRunning) {
+            this.props.stopSample();
+        } else {
+            this.props.runSample();
+        }
+    }
+
     render() {
         return (
             <div ref="controlBar" className={`controlBar ${this.props.highlight && 'highlight'}`} >
-                <span className={`run-button ${this.props.isSampleRunning ? 'stop' : ''}`} onClick={this.props.isSampleRunning ? this.props.stopSample : this.props.runSample}>
+                <span className={`run-button ${this.props.isSampleRunning ? 'stop' : ''}`} onClick={this.handleClick}>
                     <i className={`fa ${this.props.isSampleRunning ? 'fa-stop' : 'fa-play'}`} aria-hidden="true"></i>
                     {this.props.isSampleRunning ? Localization.getLocalizedString().buttonStop : Localization.getLocalizedString().buttonRun}
                 </span>

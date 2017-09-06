@@ -10,6 +10,7 @@ const mapStateToProps = (state) => ({
     highlightProject: state.main.get('guideId') === GUIDE.PROJECT,
     highlightConfigCloud: state.main.get('guideId') === GUIDE.CONFIG_CLOUD,
     highlightConfigLocal: state.main.get('guideId') === GUIDE.CONFIG_LOCAL,
+    highlightError: state.main.get('guideId') === GUIDE.CONFIG_ERROR,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -25,8 +26,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     nextGuideAfterProject: () => {
         switchGuide(dispatch, GUIDE.PROJECT + 1);
     },
+    nextGuideAfterConfigCloud: () => {
+        switchGuide(dispatch, GUIDE.CONFIG_CLOUD + 1);
+    },
     nextGuideAfterConfigLocal: () => {
         switchGuide(dispatch, GUIDE.CONFIG_LOCAL + 1);
+    },
+    nextGuideForConfigError: () => {
+        switchGuide(dispatch, GUIDE.CONFIG_ERROR);
     },
     setProjectComponentSize: (size) => {
         setComponentSize(dispatch, GUIDE.PROJECT, size);
@@ -36,6 +43,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     setConfigLocalComponentSize: (size) => {
         setComponentSize(dispatch, GUIDE.CONFIG_LOCAL, size);
+        setComponentSize(dispatch, GUIDE.CONFIG_ERROR, size);
     },
 });
 

@@ -14,7 +14,7 @@ const initialState = Map({
     isSampleRunning: false,
     runningInfo: "",
     consoleMessage: "",
-    guideId: GUIDE.CONTROL_BAR,
+    guideId: GUIDE.CLOSE,
     guidePosition: List(new Array(GUIDE.END)),
 });
 

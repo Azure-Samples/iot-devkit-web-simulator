@@ -30,8 +30,10 @@ class Editor extends Component {
 
     componentDidMount() {
         let { top, left, right, bottom, width, height } = this.refs.editor.getBoundingClientRect();
+        let dotY = top + 50;
+        let dotX = left + width -50;
         this.props.setComponentSize({
-            top, left, right, bottom, width, height,
+            top, left, right, bottom, width, height, dotX, dotY,
         });
     }
 

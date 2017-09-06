@@ -11,7 +11,6 @@ class MQTT extends EventEmitter {
   constructor(config) {
     super();
     this.config = config;
-    traceEvent('connecting');
     this.client = new Paho.MQTT.Client('wss://' + config.host + ':443/$iothub/websocket?iothub-no-client-cert=true', config.deviceId);
     this.client.onConnectionLost = this.onConnectionLost;
     this.D2CPoint = 'devices/' + config.deviceId + '/messages/events/';
@@ -29,7 +28,7 @@ class MQTT extends EventEmitter {
             return;
         }
       this.connected = true;
-      traceEvent('success-connect');
+      traceEvent('connect-success');
       cb();
     }.bind(this);
 
