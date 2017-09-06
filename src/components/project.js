@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { List, is, Map } from 'immutable';
 import { traceEvent } from '../lib/telemetry';
+import Localization from '../localization/localization';
 
 import '../common.scss'
 
@@ -202,7 +203,7 @@ class Project extends Component {
     render() {
         let deployItem;
         if (this.props.project.has('deployLink')) {
-            deployItem = <div ref="configCloud" className={`configure-deploy-link`}><a onClick={this.deployClick} target="_blank" className={`${this.props.highlightConfigCloud && 'highlight'}`} href={this.props.project.get('deployLink')} ><i className="fa fa-cloud-upload" aria-hidden="true"></i>Deploy</a></div>
+            deployItem = <div ref="configCloud" className={`configure-deploy-link`}><a onClick={this.deployClick} target="_blank" className={`${this.props.highlightConfigCloud && 'highlight'}`} href={this.props.project.get('deployLink')} ><i className="fa fa-cloud-upload" aria-hidden="true"></i>{Localization.getLocalizedString().deployButton}</a></div>
         }
         let configureItems = [];
         for (let [k, v] of this.props.project.get('config')) {

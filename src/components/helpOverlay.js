@@ -28,7 +28,7 @@ class GuideModal extends Component {
                     <div className="guide-text">
                         <div className="guide-text-title">{textTitle}</div>
                         <div className="guide-text-content">{textContent}</div>
-                        {this.props.nextStep && <div className="guide-next-step"><span onClick={this.props.nextStep} className="step">Next step</span></div>}
+                        {this.props.nextStep && <div className="guide-next-step"><span onClick={this.props.nextStep} className="step">{Localization.getLocalizedString().guideNextStep}</span></div>}
                         {this.props.externalLink && <div className="guide-external-link"><a target="_blank" href={this.props.externalLink.link} className="link">{this.props.externalLink.text}</a></div>}
 
                     </div>
@@ -94,7 +94,6 @@ class HelpOverlay extends Component {
         super(props);
     }
 
-
     onClose = () => {
         this.props.toggleHelpState();
         if (this.state.step === this.state.numOfSteps - 1) {
@@ -108,10 +107,6 @@ class HelpOverlay extends Component {
         });
     }
 
-    componentDidUpdate() {
-        console.log(this.props.guidePosition);
-    }
-
     render() {
         const { guideId, guidePosition } = this.props;
         if (!guidePosition) {
@@ -122,8 +117,8 @@ class HelpOverlay extends Component {
             displayModule = <div>
                 <GuideModal x={guidePosition.left + guidePosition.width + ARROW_WIDTH + ARROW_PADDING}
                     y={guidePosition.top}
-                    textTitle="Select a file here."
-                    textContent="First, select a project you want to run in this simulation, and then, select one file, you can see the code in the middle on this page." />
+                    textTitle={Localization.getLocalizedString().guideStepFileTitle}
+                    textContent={Localization.getLocalizedString().guideStepFileDetail} />
                 <GuideArrow x={guidePosition.left + guidePosition.width + ARROW_PADDING}
                     y={guidePosition.top + 50}
                     position={3} />
@@ -132,8 +127,8 @@ class HelpOverlay extends Component {
             displayModule = <div>
                 <GuideModal x={guidePosition.left + guidePosition.width + ARROW_WIDTH + ARROW_PADDING}
                     y={guidePosition.top}
-                    textTitle="Code display area"
-                    textContent="First, select a project you want to run in this simulation, and then, select one file, you can see the code in the middle."
+                    textTitle={Localization.getLocalizedString().guideStepCodeTitle}
+                    textContent={Localization.getLocalizedString().guideStepCodeDetail}
                     nextStep={this.props.switchGuide.bind(this, GUIDE.EDITOR + 1)} />
                 <GuideArrow x={guidePosition.left + guidePosition.width + ARROW_PADDING}
                     y={guidePosition.top + 50}
@@ -143,9 +138,9 @@ class HelpOverlay extends Component {
             displayModule = <div>
                 <GuideModal x={guidePosition.left + guidePosition.width + ARROW_WIDTH + ARROW_PADDING}
                     y={guidePosition.top}
-                    textTitle="Deploy your project to Azure"
-                    textContent="First, select a project you want to run in this simulation, and then, select one file, you can see the code in the middle."
-                    externalLink={{ text: "How to deploy", link: "http://www.google.com" }} />
+                    textTitle={Localization.getLocalizedString().guideStepDeployTitle}
+                    textContent={Localization.getLocalizedString().guideStepDeployDetail}
+                    externalLink={{ text: Localization.getLocalizedString().guideStepDeployLinkName, link: Localization.getLocalizedString().guideStepDeployLinkHref}} />
                 <GuideArrow x={guidePosition.left + guidePosition.width + ARROW_PADDING}
                     y={guidePosition.top + 50}
                     position={3} />
@@ -154,9 +149,9 @@ class HelpOverlay extends Component {
             displayModule = <div>
                 <GuideModal x={guidePosition.left + guidePosition.width + ARROW_WIDTH + ARROW_PADDING}
                     y={guidePosition.top}
-                    textTitle="Set your configurations"
-                    textContent="First, select a project you want to run in this simulation, and then, select one file, you can see the code in the middle."
-                    externalLink={{ text: "How to deploy and fill connection string", link: "http://www.google.com" }} />
+                    textTitle={Localization.getLocalizedString().guideStepFillCSTitle}
+                    textContent={Localization.getLocalizedString().guideStepFillCSDetail}
+                    externalLink={{ text: Localization.getLocalizedString().guideStepFillCSLinkName, link: Localization.getLocalizedString().guideStepFillCSLinkHref }} />
                 <GuideArrow x={guidePosition.left + guidePosition.width + ARROW_PADDING}
                     y={guidePosition.top + 50}
                     position={3} />
@@ -165,9 +160,9 @@ class HelpOverlay extends Component {
             displayModule = <div>
                 <GuideModal x={guidePosition.left + guidePosition.width + ARROW_WIDTH + ARROW_PADDING}
                     y={guidePosition.top}
-                    textTitle="Connection string is incorrect"
-                    textContent="Please deploy cloud resource first and then follow the document to get device connection string"
-                    externalLink={{ text: "How to deploy and fill connection string", link: "http://www.google.com" }} />
+                    textTitle={Localization.getLocalizedString().guideStepFillCSErrorTitle}
+                    textContent={Localization.getLocalizedString().guideStepFillCSErrorDetail}
+                    externalLink={{ text: Localization.getLocalizedString().guideStepFillCSErrorLinkName, link: Localization.getLocalizedString().guideStepFillCSErrorLinkHref }} />
                 <GuideArrow x={guidePosition.left + guidePosition.width + ARROW_PADDING}
                     y={guidePosition.top + 50}
                     position={3} />
@@ -176,8 +171,8 @@ class HelpOverlay extends Component {
             displayModule = <div>
                 <GuideModal x={guidePosition.left + guidePosition.width - 100}
                     y={guidePosition.top + 40 + ARROW_WIDTH + ARROW_PADDING}
-                    textTitle="Run your project"
-                    textContent="Please deploy cloud resource first and then follow the document to get device connection string" />
+                    textTitle={Localization.getLocalizedString().guideStepRunTitle}
+                    textContent={Localization.getLocalizedString().guideStepRunDetail} />
                 <GuideArrow x={guidePosition.left + guidePosition.width - 80}
                     y={guidePosition.top + 40 + ARROW_PADDING}
                     position={0} />
@@ -187,9 +182,9 @@ class HelpOverlay extends Component {
                 <GuideModal x={guidePosition.left - GUIDE_WIDTH - ARROW_WIDTH - ARROW_PADDING}
                     y={guidePosition.top + 200}
                     reverse={true}
-                    textTitle="Wow~ Have fun with it!"
-                    textContent="First, select a project you want to run in this simulation, and then, select one file, you can see the code in the middle."
-                    externalLink={{ text: "Get a kit", link: "http://www.google.com" }} />
+                    textTitle={Localization.getLocalizedString().guideStepBoardTitle}
+                    textContent={Localization.getLocalizedString().guideStepBoardDetail}
+                    externalLink={{ text: Localization.getLocalizedString().getAKitButton, link: Localization.getLocalizedString().buyLink }} />
                 <GuideArrow x={guidePosition.left - ARROW_WIDTH - ARROW_PADDING}
                     y={guidePosition.top + 250}
                     position={1} />
@@ -200,7 +195,7 @@ class HelpOverlay extends Component {
             <div>
             <div className="overlay" style={{ display: guideId === GUIDE.CLOSE ? "none" : "flex" }}>
                 {displayModule}
-                <span onClick={this.props.switchGuide.bind(this, GUIDE.CLOSE)} className="close-guide" ><i className="fa fa-times" aria-hidden="true"></i>Turn guides off</span>
+                <span onClick={this.props.switchGuide.bind(this, GUIDE.CLOSE)} className="close-guide" ><i className="fa fa-times" aria-hidden="true"></i>{Localization.getLocalizedString().guideTurnOff}</span>
             </div>
             <div className="guide-dot" style={{ display: guideId === GUIDE.CLOSE ? "none" : "flex", top: guidePosition.dotY - DOT_RADIUS, left: guidePosition.dotX - DOT_RADIUS }} ></div>
             </div>

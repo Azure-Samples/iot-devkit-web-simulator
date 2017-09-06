@@ -48,7 +48,7 @@ class App extends Component {
                     <div ref="rightContainer" className={`right-container ${this.props.highlight && 'highlight'}`} >
                         <Board />
                         <div className="get-a-kit">
-                            <a onClick={traceEvent.bind(this, 'buy-clicked')} className="no-underline" target="_blank" href="http://mxchip.com/az3166" >Get a kit</a>
+                            <a onClick={traceEvent.bind(this, 'buy-clicked')} className="no-underline" target="_blank" href={Localization.getLocalizedString().buyLink} >{Localization.getLocalizedString().getAKitButton}</a>
                         </div>
                         <MyConsole />
                     </div>
