@@ -3,11 +3,10 @@ import { traceEvent } from '../lib/telemetry';
 import '../common.scss';
 import Localization from '../localization/localization';
 import img1 from '../img/step1.png';
-import img2_1 from '../img/step2_1.png';
-import img2_2 from '../img/step2_2.png';
-import img2_3 from '../img/step2_3.png';
-import img3_1 from '../img/step3_1.png';
-import img3_2 from '../img/step3_2.png';
+import img2 from '../img/step2.png';
+import img3 from '../img/step3.png';
+import img4 from '../img/step4.png';
+import img5 from '../img/step5.png';
 import arrow1 from '../img/arrow1.png';
 import arrow2 from '../img/arrow2.png';
 import arrow3 from '../img/arrow3.png';
@@ -17,11 +16,11 @@ import * as GUIDE from '../constants/guide';
 const ARROW_WIDTH = 20;
 const ARROW_HEIGHT = 30;
 const ARROW_PADDING = 5;
-const DOT_RADIUS = 12;
+const DOT_RADIUS = 10;
 const GUIDE_WIDTH = 544;
 class GuideModal extends Component {
     render() {
-        let { x, y, textTitle, textContent } = this.props;
+        let { x, y, textTitle, textContent, image } = this.props;
         return (
             <div style={{ top: y, left: x, flexFlow: (this.props.reverse && 'row-reverse') }} className="guide-modal">
                 <div className="guide-text-container">
@@ -33,7 +32,7 @@ class GuideModal extends Component {
 
                     </div>
                 </div>
-                <div className="guide-picture"><img src={img1} /></div>
+                <div className="guide-picture"><img src={image} /></div>
             </div>
         )
     }
@@ -118,7 +117,8 @@ class HelpOverlay extends Component {
                 <GuideModal x={guidePosition.left + guidePosition.width + ARROW_WIDTH + ARROW_PADDING}
                     y={guidePosition.top}
                     textTitle={Localization.getLocalizedString().guideStepFileTitle}
-                    textContent={Localization.getLocalizedString().guideStepFileDetail} />
+                    textContent={Localization.getLocalizedString().guideStepFileDetail}
+                    image={img1} />
                 <GuideArrow x={guidePosition.left + guidePosition.width + ARROW_PADDING}
                     y={guidePosition.top + 50}
                     position={3} />
@@ -129,7 +129,8 @@ class HelpOverlay extends Component {
                     y={guidePosition.top}
                     textTitle={Localization.getLocalizedString().guideStepCodeTitle}
                     textContent={Localization.getLocalizedString().guideStepCodeDetail}
-                    nextStep={this.props.switchGuide.bind(this, GUIDE.EDITOR + 1)} />
+                    nextStep={this.props.switchGuide.bind(this, GUIDE.EDITOR + 1)} 
+                    image={img2} />
                 <GuideArrow x={guidePosition.left + guidePosition.width + ARROW_PADDING}
                     y={guidePosition.top + 50}
                     position={3} />
@@ -140,7 +141,8 @@ class HelpOverlay extends Component {
                     y={guidePosition.top}
                     textTitle={Localization.getLocalizedString().guideStepDeployTitle}
                     textContent={Localization.getLocalizedString().guideStepDeployDetail}
-                    externalLink={{ text: Localization.getLocalizedString().guideStepDeployLinkName, link: Localization.getLocalizedString().guideStepDeployLinkHref}} />
+                    externalLink={{ text: Localization.getLocalizedString().guideStepDeployLinkName, link: Localization.getLocalizedString().guideStepDeployLinkHref }} 
+                    image={img3} />
                 <GuideArrow x={guidePosition.left + guidePosition.width + ARROW_PADDING}
                     y={guidePosition.top + 50}
                     position={3} />
@@ -151,7 +153,8 @@ class HelpOverlay extends Component {
                     y={guidePosition.top}
                     textTitle={Localization.getLocalizedString().guideStepFillCSTitle}
                     textContent={Localization.getLocalizedString().guideStepFillCSDetail}
-                    externalLink={{ text: Localization.getLocalizedString().guideStepFillCSLinkName, link: Localization.getLocalizedString().guideStepFillCSLinkHref }} />
+                    externalLink={{ text: Localization.getLocalizedString().guideStepFillCSLinkName, link: Localization.getLocalizedString().guideStepFillCSLinkHref }} 
+                    image={img4} />
                 <GuideArrow x={guidePosition.left + guidePosition.width + ARROW_PADDING}
                     y={guidePosition.top + 50}
                     position={3} />
@@ -162,7 +165,8 @@ class HelpOverlay extends Component {
                     y={guidePosition.top}
                     textTitle={Localization.getLocalizedString().guideStepFillCSErrorTitle}
                     textContent={Localization.getLocalizedString().guideStepFillCSErrorDetail}
-                    externalLink={{ text: Localization.getLocalizedString().guideStepFillCSErrorLinkName, link: Localization.getLocalizedString().guideStepFillCSErrorLinkHref }} />
+                    externalLink={{ text: Localization.getLocalizedString().guideStepFillCSErrorLinkName, link: Localization.getLocalizedString().guideStepFillCSErrorLinkHref }} 
+                    image={img4} />
                 <GuideArrow x={guidePosition.left + guidePosition.width + ARROW_PADDING}
                     y={guidePosition.top + 50}
                     position={3} />
@@ -172,7 +176,8 @@ class HelpOverlay extends Component {
                 <GuideModal x={guidePosition.left + guidePosition.width - 100}
                     y={guidePosition.top + 40 + ARROW_WIDTH + ARROW_PADDING}
                     textTitle={Localization.getLocalizedString().guideStepRunTitle}
-                    textContent={Localization.getLocalizedString().guideStepRunDetail} />
+                    textContent={Localization.getLocalizedString().guideStepRunDetail} 
+                    image={img2} />
                 <GuideArrow x={guidePosition.left + guidePosition.width - 80}
                     y={guidePosition.top + 40 + ARROW_PADDING}
                     position={0} />
@@ -184,20 +189,29 @@ class HelpOverlay extends Component {
                     reverse={true}
                     textTitle={Localization.getLocalizedString().guideStepBoardTitle}
                     textContent={Localization.getLocalizedString().guideStepBoardDetail}
-                    externalLink={{ text: Localization.getLocalizedString().getAKitButton, link: Localization.getLocalizedString().buyLink }} />
+                    externalLink={{ text: Localization.getLocalizedString().getAKitButton, link: Localization.getLocalizedString().buyLink }} 
+                    image={img5} />
                 <GuideArrow x={guidePosition.left - ARROW_WIDTH - ARROW_PADDING}
                     y={guidePosition.top + 250}
                     position={1} />
+                
             </div>;
         }
 
         return (
             <div>
-            <div className="overlay" style={{ display: guideId === GUIDE.CLOSE ? "none" : "flex" }}>
-                {displayModule}
-                <span onClick={this.props.switchGuide.bind(this, GUIDE.CLOSE)} className="close-guide" ><i className="fa fa-times" aria-hidden="true"></i>{Localization.getLocalizedString().guideTurnOff}</span>
-            </div>
-            <div className="guide-dot" style={{ display: guideId === GUIDE.CLOSE ? "none" : "flex", top: guidePosition.dotY - DOT_RADIUS, left: guidePosition.dotX - DOT_RADIUS }} ></div>
+                <div className="overlay" style={{ display: guideId === GUIDE.CLOSE ? "none" : "flex" }}>
+                    {displayModule}
+                    <span onClick={this.props.switchGuide.bind(this, GUIDE.CLOSE)} className="close-guide" ><i className="fa fa-times" aria-hidden="true"></i>{Localization.getLocalizedString().guideTurnOff}</span>
+                </div>
+
+                <div className="guide-dot" style={{ display: guideId === GUIDE.CLOSE ? "none" : "block", top: guidePosition.dotY - DOT_RADIUS, left: guidePosition.dotX - DOT_RADIUS }} >
+                    <span className="guide-outer-dot">
+                        <span className="guide-inner-dot"></span>
+                    </span>
+                </div>
+
+                <img className="shake-icon" style={{ display: guideId !== GUIDE.BOARD ? "none" : "block",left: guidePosition.left+10, top: guidePosition.top+10 }} src={shakeImg} />
             </div>
         );
     }

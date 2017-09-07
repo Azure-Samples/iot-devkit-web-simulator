@@ -15,7 +15,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         let result = SampleRunner.getInstance().run(appendConsoleLog.bind(this, dispatch), appendConsoleLog.bind(this, dispatch));
         if (result === 0) {
             runSample(dispatch);
-            switchGuide(dispatch, GUIDE.CONTROL_BAR + 1);
         }
     },
     stopSample: () => {
@@ -24,6 +23,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     setComponentSize: (size) => {
         setComponentSize(dispatch, GUIDE.CONTROL_BAR, size);
+    },
+    switchGuide: () => {
+        switchGuide(dispatch, GUIDE.CONTROL_BAR + 1);
     },
 });
 

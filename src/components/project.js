@@ -166,7 +166,9 @@ class Project extends Component {
 
     deployClick = () => {
         traceEvent('deploy-clicked');
-        this.props.nextGuideAfterConfigCloud();
+        if (this.props.highlightConfigCloud) {
+            this.props.nextGuideAfterConfigCloud();
+        }
     }
 
     renderProjects(allProjects) {

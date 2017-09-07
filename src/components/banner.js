@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import rpiLogo from '../img/rpi-logo.png'
+// import rpiLogo from '../img/rpi-logo.png'
 import HelpButton from './helpButton';
 import Localization from '../localization/localization';
 import { traceEvent } from '../lib/telemetry';
