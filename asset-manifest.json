@@ -1,12 +1,13 @@
 {
-  "main.css": "static/css/main.e8905939.css",
-  "main.css.map": "static/css/main.e8905939.css.map",
-  "main.js": "static/js/main.ee3ec0f5.js",
-  "main.js.map": "static/js/main.ee3ec0f5.js.map",
+  "main.css": "static/css/main.f2ef3838.css",
+  "main.css.map": "static/css/main.f2ef3838.css.map",
+  "main.js": "static/js/main.6bf7bf6c.js",
+  "main.js.map": "static/js/main.6bf7bf6c.js.map",
   "static\\media\\devkit-board.png": "static/media/devkit-board.f84348e6.png",
-  "static\\media\\step2_1.png": "static/media/step2_1.1073ca15.png",
-  "static\\media\\step2_2.png": "static/media/step2_2.04b738c6.png",
-  "static\\media\\step2_3.png": "static/media/step2_3.554d5d36.png",
-  "static\\media\\step3_1.png": "static/media/step3_1.fd9d8983.png",
-  "static\\media\\step3_2.png": "static/media/step3_2.3ad9b93d.png"
+  "static\\media\\shake.png": "static/media/shake.38f57a16.png",
+  "static\\media\\step1.png": "static/media/step1.8a2cbc40.png",
+  "static\\media\\step2.png": "static/media/step2.348a0e76.png",
+  "static\\media\\step3.png": "static/media/step3.e1bee8a1.png",
+  "static\\media\\step4.png": "static/media/step4.b59d98f5.png",
+  "static\\media\\step5.png": "static/media/step5.5fd6f838.png"
 }
