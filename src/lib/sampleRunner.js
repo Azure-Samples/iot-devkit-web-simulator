@@ -112,9 +112,9 @@ class SampleRunner {
                 src: /require\('azure-iot-device-mqtt'\)\.Mqtt/g,
                 dest: 'Protocol'
             }, {
-                //     src: /console\.log/g,
-                //     dest: 'msgCb'
-                // }, {
+                src: /console\.log/g,
+                dest: 'msgCb'
+            }, {
                 src: /console\.error/g,
                 dest: 'errCb'
             }, {

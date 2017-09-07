@@ -27,9 +27,8 @@ class GuideModal extends Component {
                     <div className="guide-text">
                         <div className="guide-text-title">{textTitle}</div>
                         <div className="guide-text-content">{textContent}</div>
-                        {this.props.nextStep && <div className="guide-next-step"><span onClick={this.props.nextStep} className="step">{Localization.getLocalizedString().guideNextStep}</span></div>}
                         {this.props.externalLink && <div className="guide-external-link"><a target="_blank" href={this.props.externalLink.link} className="link">{this.props.externalLink.text}</a></div>}
-
+                        {this.props.nextStep && <div className="guide-next-step" style={this.props.nextStepOnLeft?{flexFlow:"row"}:{}}><span onClick={this.props.nextStep} className="step">{this.props.nextStepText ? this.props.nextStepText : Localization.getLocalizedString().guideNextStep}</span></div>}
                     </div>
                 </div>
                 <div className="guide-picture"><img src={image} /></div>
@@ -190,6 +189,9 @@ class HelpOverlay extends Component {
                     textTitle={Localization.getLocalizedString().guideStepBoardTitle}
                     textContent={Localization.getLocalizedString().guideStepBoardDetail}
                     externalLink={{ text: Localization.getLocalizedString().getAKitButton, link: Localization.getLocalizedString().buyLink }} 
+                    nextStep={this.props.switchGuide.bind(this, GUIDE.CLOSE)}
+                    nextStepOnLeft={true}
+                    nextStepText="I'm done" 
                     image={img5} />
                 <GuideArrow x={guidePosition.left - ARROW_WIDTH - ARROW_PADDING}
                     y={guidePosition.top + 250}

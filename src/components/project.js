@@ -17,6 +17,7 @@ class Project extends Component {
             configureChanged: false,
             config: this.props.project.get('config').toJS(),
             csError: false,
+            withGuideCsFocus: false,
         };
         this.initState(this.state.folders, this.props.project.get('files'), true);
     }
@@ -114,7 +115,7 @@ class Project extends Component {
                 config: newConfig,
             };
         });
-        if (this.props.highlightConfigLocal) {
+        if (this.props.highlightConfigLocal || this.props.highlightError) {
             let { top, left, right, bottom, width, height } = this.refs.configLocal.getBoundingClientRect();
             let saveIcon = this.refs.saveConfig.getBoundingClientRect();
             let dotX = saveIcon.left + saveIcon.width / 2;
@@ -122,6 +123,7 @@ class Project extends Component {
             this.props.setConfigLocalComponentSize({
                 top, left, right, bottom, width, height, dotX, dotY,
             });
+            this.connectionStringInput.style.animation = null;
         }
     }
 
@@ -171,6 +173,20 @@ class Project extends Component {
         }
     }
 
+    csFocus = () => {
+        {
+            let { top, left, right, bottom, width, height } = this.refs.configLocal.getBoundingClientRect();
+            let csInput = this.connectionStringInput.getBoundingClientRect();
+            let dotX = -100;
+            let dotY = -100;
+            this.props.setConfigLocalComponentSize({
+                top, left, right, bottom, width, height, dotX, dotY,
+            });
+        }
+        console.log(this.connectionStringInput.style)
+        this.connectionStringInput.style.animation = "border-glow 1.5s linear infinite";
+    }
+
     renderProjects(allProjects) {
         let items = [];
         for (let [k, v] of allProjects) {
@@ -212,7 +228,11 @@ class Project extends Component {
             configureItems.push(
                 <div key={k} className="configure-item" >
                     <div className="configure-item-key">{k}</div>
-                    <input ref={el => { if (k === 'connectionString') this.connectionStringInput = el; }} type="text" className={`configure-item-value ${k === 'connectionString' && this.state.csError && 'cs-error'}`} value={this.state.config[k]} onChange={this.handleChange.bind(this, k)} />
+                    <input ref={el => { if (k === 'connectionString') this.connectionStringInput = el; }} type="text"
+                        onFocus={(k === 'connectionString' && (this.props.highlightConfigLocal || this.props.highlightError)) && this.csFocus}
+                        className={`configure-item-value ${k === 'connectionString' && this.state.csError && 'cs-error'}`}
+                        value={this.state.config[k]}
+                        onChange={this.handleChange.bind(this, k)} />
                 </div>
             );
         }

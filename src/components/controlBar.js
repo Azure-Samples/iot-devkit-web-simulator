@@ -5,7 +5,7 @@ import Localization from '../localization/localization';
 class ControlBar extends Component {
     componentDidMount() {
         let { top, left, right, bottom, width, height } = this.refs.controlBar.getBoundingClientRect();
-        let dotX = right - 20;;
+        let dotX = right - 120;
         let dotY = top + height / 2;
         this.props.setComponentSize({
             top, left, right, bottom, width, height, dotX, dotY,
