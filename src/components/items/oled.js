@@ -178,7 +178,9 @@ class OLED extends React.Component {
                 line++;
                 this._clearRect(0, line * YY / 4, XX, (line + 1) * YY / 4);
                 c = 0;
-                i--;
+                if (c >= 16) {
+                    i--;
+                }
             } else {
                 if (c >= 16 || line >= 4) {
                     continue;
@@ -217,7 +219,7 @@ class OLED extends React.Component {
                         }
                     }
                 }
-            }else {
+            } else {
                 this.pixels.fill(false);
             }
         }

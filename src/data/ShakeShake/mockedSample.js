@@ -393,10 +393,17 @@ function DoReceived() {
     app_status = 0;
 }
 async function ScrollTweet() {
-    if (msgBody != "" ) {
-        msgStart += 16;
-        if (msgStart >= msgBody.length) {
+    if (msgBody != "") {
+        if (msgStart < 0) {
+            // First time
+            DrawAppTitle(msgHeader);
             msgStart = 0;
+        }
+        else {
+            msgStart += SCROLL_OFFSET;
+            if (msgStart >= msgBody.length) {
+                msgStart = 0;
+            }
         }
         // Clean the msg screen
         Screen.print(1, " ");
