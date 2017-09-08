@@ -22,7 +22,7 @@ var msgBody = "";
 var msgStart = 0;
 var app_status;
 var shake_progress;
-var hb_interval_ms=SystemTickCounterRead();
+var hb_interval_ms = SystemTickCounterRead();
 var tweet_timeout_ms;
 var idx = 0;
 const RGB_LED_BRIGHTNESS = 256;
@@ -270,7 +270,7 @@ async function setup() {
     shake_progress = 0;
     DrawAppTitle("IoT DevKit");
     Screen.print(2, "Connecting...");
-    
+
     Screen.print(3, " > WiFi");
     await delay(1500);
     // todo turn on wifi led
@@ -293,12 +293,12 @@ async function setup() {
         HeartBeat();
         rgbLed.turnOff();
         // todo turn on azure led
-        Screen.print(1,"192.168.1.1");
+        Screen.print(1, "192.168.1.1");
         Screen.print(2, "Press A to Shake!");
         Screen.print(3, " ");
     });
 }
-function DoIdle() {
+async function DoIdle() {
     if (buttonA.getSwitch()) {
         Screen.clean();
         app_status = 1;
@@ -321,39 +321,40 @@ async function DoShake() {
         traceEvent('shake-success');
 
         await delay(1000);
-
         var msgObj = new Message(iot_event);
-        client.sendEvent(msgObj, async function (err) {
-            if (!err) {
-                await delay(2000);
-                if (shake_progress < 2) {
-                    // Because the tweet may return quickly and the TwitterMessageCallback be executed before run to here,
-                    // So check the shake_progress to avoid set the wrong value.
-                    // IoT hub has got the message
-                    shake_progress = 2;
+        await delay(2000);
+        let promise = new Promise((resolve, reject) => {
+            client.sendEvent(msgObj, function (err) {
+                if (!err) {
+                    if (shake_progress < 2) {
+                        // Because the tweet may return quickly and the TwitterMessageCallback be executed before run to here,
+                        // So check the shake_progress to avoid set the wrong value.
+                        // IoT hub has got the message
+                        shake_progress = 2;
+                    }
+                    // Update the screen
+                    ShowShakeProgress();
+                    // Start retrieving tweet timeout clock
+                    tweet_timeout_ms = SystemTickCounterRead();
+                    resolve();
                 }
-                // Update the screen
-                ShowShakeProgress();
-                // Start retrieving tweet timeout clock
-                tweet_timeout_ms = SystemTickCounterRead();
-            }
-            else {
-                NoTweets();
-            }
-            // todo user led off
+                else {
+                    reject();
+                    NoTweets();
+                }
+                // todo user led off
+            });
         });
-
-
+        await promise;
     } else {
         DrawShakeAnimation();
     }
 }
-function DoWork() {
+async function DoWork() {
     if (SystemTickCounterRead() - tweet_timeout_ms >= PULL_TIMEOUT) {
         // Timeout
         NoTweets();
     }
-
 
     if (shake_progress > 2) {
         // Got the tweet message
@@ -385,13 +386,7 @@ function DoWork() {
         }
     }
 }
-function DoReceived() {
-    Screen.clean();
-    Screen.print(0, msgHeader);
-    Screen.print(1, msgBody, true);
-    rgbLed.setColor(0, 0, RGB_LED_BRIGHTNESS);
-    app_status = 0;
-}
+
 async function ScrollTweet() {
     if (msgBody != "") {
         if (msgStart < 0) {
@@ -417,22 +412,21 @@ async function ScrollTweet() {
 async function loop() {
     switch (app_status) {
         case 0:
-            DoIdle();
+            await DoIdle();
             break;
         case 1:
-            DoShake();
+            await DoShake();
             break;
         case 2:
-            DoWork();
+            await DoWork();
             break;
     }
-    
+    await delay(100);
 }
 async function run() {
     await setup();
     while (true) {
-        loop();
-        await delay(100);
+        await loop();
     }
 }
 run();
