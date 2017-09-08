@@ -200,8 +200,7 @@ body {
                         }
                     }
                     .hide {
-                        opacity: 0;
-                        visibility: hidden;
+                        opacity: 0.4;
                         transition: $animation-long;
                     }
                 }
