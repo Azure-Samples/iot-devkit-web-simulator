@@ -189,15 +189,16 @@ function HeartBeat() {
         return;
     }
     console.log(">>Heartbeat<<");
+    hb_interval_ms = SystemTickCounterRead();
     // todo add user led
-    var msgObj = new Message(iot_event);
-    client.sendEvent(new Message(iot_event_heartbeat), async function (err) {
-        if (err) {
-            console.error('Failed to send message to Azure IoT Hub');
-        } else {
-            hb_interval_ms = SystemTickCounterRead();
-        }
-    });
+    // var msgObj = new Message(iot_event);
+    // client.sendEvent(new Message(iot_event_heartbeat), async function (err) {
+    //     if (err) {
+    //         console.error('Failed to send message to Azure IoT Hub');
+    //     } else {
+    //         hb_interval_ms = SystemTickCounterRead();
+    //     }
+    // });
 }
 
 async function blinkLED() {
