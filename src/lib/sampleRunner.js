@@ -142,7 +142,6 @@ class SampleRunner {
         ];
 
         try {
-            traceEvent('run-sample');
             let code = store.getState().project.getIn(['currentProject', 'jsCode']);
             for (var i = 0; i < replaces.length; i++) {
                 var replace = replaces[i];

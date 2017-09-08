@@ -164,6 +164,7 @@ class Project extends Component {
         if (this.props.highlightConfigLocal || this.props.highlightError) {
             this.props.nextGuideAfterConfigLocal();
         }
+        this.connectionStringInput.style.animation = null;
     }
 
     deployClick = () => {

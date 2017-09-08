@@ -328,16 +328,16 @@ body {
                     }
                 }
             }
-            div.react-console-container {
-                height: 100%;
-                width: auto;
-                background: #f4f4f4;
-                .react-console-message {
-                    color: #4c4c4c;
-                }
-            }
             .showConsole {
                 flex: 1;
+                div.react-console-container {
+                    height: 100%;
+                    overflow-y: scroll;
+                    background: #f4f4f4;
+                    .react-console-message {
+                        color: #4c4c4c;
+                    }
+                }
             }
         }
     }
@@ -575,7 +575,6 @@ $dot-radius: 10px;
     display: flex;
     flex-flow: column;
     justify-content: center;
-
     .spinner-label {
         text-align: center;
         color: #858585;
