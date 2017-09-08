@@ -132,7 +132,7 @@
                         },
                         {
                             "name": "iotHubConnectionString",
-                            "value": "[concat('HostName=',parameters('iotHubName'),';SharedAccessKeyName=iothubowner;SharedAccessKey=',listKeys(resourceId('Microsoft.Devices/IotHubs/Iothubkeys', parameters('iotHubName'), 'iothubowner'), '2016-02-03').primaryKey)]"
+                            "value": "[concat('HostName=',parameters('iotHubName'),'.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=',listKeys(resourceId('Microsoft.Devices/IotHubs/Iothubkeys', parameters('iotHubName'), 'iothubowner'), '2016-02-03').primaryKey)]"
                         }
                     ]
                 },
