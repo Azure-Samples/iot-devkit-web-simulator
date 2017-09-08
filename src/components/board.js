@@ -74,7 +74,7 @@ class Board extends Component {
         };
     };
 
-    componentDidMount() {
+    setSelfSize = () => {
         let cHeight = this.stage.domNode.offsetHeight;
         let cWidth = this.stage.domNode.offsetWidth;
         let bHeight = cHeight * 0.8;
@@ -94,6 +94,15 @@ class Board extends Component {
                 selfY: (cHeight - bHeight) / 2,
             };
         });
+    }
+
+    onResize = () => {
+        this.setSelfSize();
+    }
+
+    componentDidMount() {
+        window.addEventListener("resize", this.onResize);
+        this.setSelfSize();
         const image = new window.Image();
         image.src = devkitImage;
         image.onload = () => {
@@ -144,6 +153,10 @@ class Board extends Component {
         if (!window.devkitPlayground) {
             window.devkitPlayground = Object.assign({}, this.element);
         }
+    }
+
+    componentWillUnmount() {
+        window.addEventListener("resize", this.onResize);
     }
 
     render() {

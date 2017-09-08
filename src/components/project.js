@@ -22,19 +22,7 @@ class Project extends Component {
         this.initState(this.state.folders, this.props.project.get('files'), true);
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (!is(prevProps.project, this.props.project)) {
-            let file = this.props.project.get('files').findEntry(v => v.get('type') === 'file');
-            this.setState(() => {
-                return {
-                    config: this.props.project.get('config').toJS(),
-                    selectedFilePath: List().push(file[0]),
-                };
-            });
-        }
-    }
-
-    componentDidMount() {
+    reportPosition = () => {
         {
             let { top, left, right, bottom, width, height } = this.refs.project.getBoundingClientRect();
             let firstFileSize = this.firstFileRef.getBoundingClientRect();
@@ -60,6 +48,32 @@ class Project extends Component {
                 top, left, right, bottom, width, height, dotX, dotY,
             });
         }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log(this.refs.project.getBoundingClientRect().width)
+        if (!is(prevProps.project, this.props.project)) {
+            let file = this.props.project.get('files').findEntry(v => v.get('type') === 'file');
+            this.setState(() => {
+                return {
+                    config: this.props.project.get('config').toJS(),
+                    selectedFilePath: List().push(file[0]),
+                };
+            });
+        }
+    }
+
+    componentDidMount() {
+        this.reportPosition();
+        window.addEventListener("resize", this.onResize);
+    }
+
+    componentWillUnmount() {
+        window.addEventListener("resize", this.onResize);
+    }
+
+    onResize = () => {
+        this.reportPosition();
     }
 
     initState(state, files, root, folderName) {
@@ -238,7 +252,7 @@ class Project extends Component {
             );
         }
         return (
-            <div className="project-container">
+            <div className="project-container" >
                 <div className={`current-project ${this.state.collapseProjectSelector ? "hide-items" : "show-items"}`} onClick={this.toggleProjectSelectorCollapsed}>
                     <i className={`fa ${this.state.collapseProjectSelector ? "fa-caret-down" : "fa-caret-up"}`} aria-hidden="true"></i>
                     {this.props.project.get('displayName')}

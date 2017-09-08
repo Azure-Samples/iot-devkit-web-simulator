@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Localization from '../localization/localization';
 
 class ControlBar extends Component {
-    componentDidMount() {
+    reportPosition = () => {
         let { top, left, right, bottom, width, height } = this.refs.controlBar.getBoundingClientRect();
         let dotX = right - 120;
         let dotY = top + height / 2;
@@ -11,13 +11,26 @@ class ControlBar extends Component {
             top, left, right, bottom, width, height, dotX, dotY,
         });
     }
+    
+    componentDidMount() {
+        this.reportPosition();
+        window.addEventListener("resize", this.onResize);
+    }
+
+    componentWillUnmount() {
+        window.addEventListener("resize", this.onResize);
+    }
+
+    onResize = () => {
+        this.reportPosition();
+    }
 
     handleClick = () => {
         if (this.props.isSampleRunning) {
             this.props.stopSample();
         } else {
             this.props.runSample();
-            if(this.props.highlight) {
+            if (this.props.highlight) {
                 this.props.switchGuide();
             }
         }

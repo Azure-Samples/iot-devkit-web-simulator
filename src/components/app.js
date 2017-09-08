@@ -22,17 +22,30 @@ class App extends Component {
         tracePageViewAI();
     }
 
-    componentDidMount() {
+    reportPosition = () => {
         let { top, left, right, bottom, width, height } = this.refs.rightContainer.getBoundingClientRect();
         this.props.setComponentSize({
             top, left, right, bottom, width, height,
             dotX: -100,
             dotY: -100,
         });
+    }
+
+    componentDidMount() {
         if (!localStorage.getItem('disable-help')) {
             localStorage.setItem('disable-help', '1');
             this.props.openGuide();
         }
+        this.reportPosition();
+        window.addEventListener("resize", this.onResize);
+    }
+
+    componentWillUnmount() {
+        window.addEventListener("resize", this.onResize);
+    }
+
+    onResize = () => {
+        this.reportPosition();
     }
 
     render() {
