@@ -1,7 +1,7 @@
 # MXChip IoT DevKit Web Simulator
 A browser-based simulator for you to try [MXChip IoT DevKit](https://microsoft.github.io/azure-iot-developer-kit/).
 
-Click to visit **[Demo page](https://vschina.github.io/devkit-playground/build/index.html)** 
+Click to visit **[Demo page](https://aka.ms/iot-devkit-simulator)** 
 
 [Buy a real DevKit](https://aka.ms/iot-devkit-purchase) to develop IoT app with Microsoft Azure and Visual Studio Code.
 
