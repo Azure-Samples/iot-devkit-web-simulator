@@ -19,6 +19,13 @@ const userProperties = {
 AppInsights.downloadAndSetup({ instrumentationKey: intrumentKey });
 ga.initialize(googleAnalticsKey);
 
+// Prevent AI from tracking user's location IP information.
+AppInsights.queue.push(function () {
+  AppInsights.context.addTelemetryInitializer(function (envelope) {
+      envelope.tags['ai.location.ip'] = '0.0.0.0';
+  });
+});
+
 function tracePageView() {
     ga.set(userProperties);
     ga.ga('send', 'pageview');
