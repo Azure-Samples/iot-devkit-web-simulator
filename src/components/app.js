@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Localization from '../localization/localization';
 import { traceEvent } from '../lib/telemetry.js';
 // import 'bootstrap/dist/css/bootstrap.css';

@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import Board from '../components/board';
-import { setSensorData as setSensorData2, runSample, stopSample, appendConsoleLog, setComponentSize  } from '../actions';
-import { Map, is } from 'immutable';
+import { setSensorData as setSensorData2, runSample, stopSample, appendConsoleLog  } from '../actions';
 import SampleRunner from '../lib/sampleRunner';
 
 

@@ -2,13 +2,13 @@ import {
     SET_EDITOR_PATH,
     SELECT_PROJECT,
     SET_PROJECT_CONFIG,
-    UPDATE_DISPLAY_CODE,
 } from '../constants/actionTypes';
 import { Map, is } from 'immutable';
 import { getAllProjects } from '../lib/projectFactory';
 import * as CONSTANTS from '../constants/localStorageKeys';
 
 const getCodeInFirstFile = (project) => {
+    // eslint-disable-next-line no-unused-vars
     for (let [k, v] of project.get('files')) {
         if (v.get('type') === 'file') {
             return [v.get('data'), v.get('format')];

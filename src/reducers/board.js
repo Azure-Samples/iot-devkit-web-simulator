@@ -2,7 +2,7 @@ import {
     SWITCH_ON_OFF_BOARD,
     SET_SENSOR_DATA,
 } from '../constants/actionTypes';
-import { Map, is } from 'immutable';
+import { Map } from 'immutable';
 import * as sensorName from '../constants/sensorName';
 
 const initialState = Map({

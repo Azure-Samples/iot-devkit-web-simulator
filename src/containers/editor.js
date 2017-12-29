@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Editor from '../components/editor';
-import { switchGuide, setComponentSize } from '../actions';
+import { setComponentSize } from '../actions';
 import * as GUIDE from '../constants/guide';
 
 const mapStateToProps = (state) => ({

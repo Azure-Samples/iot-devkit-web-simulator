@@ -2,7 +2,6 @@ import { Client, Message } from 'azure-iot-device'
 import { traceEvent } from './telemetry.js';
 import Protocol from './mqtt.js';
 import store from '../index';
-import { Map } from 'immutable';
 import { showRunningInfo, runSample } from '../actions';
 
 class ClientWrapper extends Client {
@@ -21,8 +20,8 @@ class SampleRunner {
     constructor() {
         this.runningFunction = null;
         if (!window.oldSetTimeout) {
-            window.timeoutList = new Array();
-            window.intervalList = new Array();
+            window.timeoutList = [];
+            window.intervalList = [];
 
             window.oldSetTimeout = window.setTimeout;
             window.oldSetInterval = window.setInterval;
@@ -59,13 +58,13 @@ class SampleRunner {
                 for (var i in window.timeoutList) {
                     window.oldClearTimeout(window.timeoutList[i]);
                 }
-                window.timeoutList = new Array();
+                window.timeoutList = [];
             };
             window.clearAllIntervals = function () {
                 for (var i in window.intervalList) {
                     window.oldClearInterval(window.intervalList[i]);
                 }
-                window.intervalList = new Array();
+                window.intervalList = [];
             };
         }
         this.actualClient = null;
@@ -149,6 +148,7 @@ class SampleRunner {
             }
             code = code.replace(/\[CONNECTION_STRING_PLACE_HOLDER\]/g, connectionString);
             code = code.replace(/\[TOPIC_PLACE_HOLDER\]/g, topic);
+            // eslint-disable-next-line no-new-func
             this.runningFunction = new Function('replaces' + prefix, code);
             setTimeout(() => {
                 this.runningFunction(Object.assign({

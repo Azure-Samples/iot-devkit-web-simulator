@@ -11,9 +11,9 @@ class Banner extends Component {
       <div className="banner">
         {/*<img src={rpiLogo} alt={Localization.getLocalizedString().altRaspberryPiLogo}/>*/}
         <span>{window.innerWidth<=768?Localization.getLocalizedString().pageTitleMobile:Localization.getLocalizedString().pageTitle}</span>
-        <HelpButton 
-          switchGuide = {this.props.switchGuide} />
-        <a onClick={traceEvent.bind(this,'buy-clicked')} className="no-underline banner-button buy-link" target="_blank" href={Localization.getLocalizedString().buyLink} ><i className="fa fa-shopping-cart" aria-hidden="true"></i>{Localization.getLocalizedString().buyButton}</a>  
+        <HelpButton
+          switchGuide={this.props.switchGuide} />
+        <a onClick={traceEvent.bind(this,'buy-clicked')} className="no-underline banner-button buy-link" target="_blank" href={Localization.getLocalizedString().buyLink} ><i className="fa fa-shopping-cart" aria-hidden="true"></i>{Localization.getLocalizedString().buyButton}</a>
       </div>
     );
   }

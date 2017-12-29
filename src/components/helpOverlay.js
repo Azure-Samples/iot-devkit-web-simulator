@@ -7,14 +7,10 @@ import img2 from '../img/step2.png';
 import img3 from '../img/step3.png';
 import img4 from '../img/step4.png';
 import img5 from '../img/step5.png';
-import arrow1 from '../img/arrow1.png';
-import arrow2 from '../img/arrow2.png';
-import arrow3 from '../img/arrow3.png';
 import shakeImg from '../img/shake.png';
 import * as GUIDE from '../constants/guide';
 
 const ARROW_WIDTH = 20;
-const ARROW_HEIGHT = 30;
 const ARROW_PADDING = 5;
 const DOT_RADIUS = 10;
 const GUIDE_WIDTH = 544;
@@ -31,7 +27,7 @@ class GuideModal extends Component {
                         {this.props.nextStep && <div className="guide-next-step" style={this.props.nextStepOnLeft?{flexFlow:"row"}:{}}><span onClick={this.props.nextStep} className="step">{this.props.nextStepText ? this.props.nextStepText : Localization.getLocalizedString().guideNextStep}</span></div>}
                     </div>
                 </div>
-                <div className="guide-picture"><img src={image} /></div>
+                <div className="guide-picture"><img alt={Localization.getLocalizedString().guideStepBoardImageTitle} src={image} /></div>
             </div>
         )
     }
@@ -88,9 +84,6 @@ class GuideArrow extends Component {
 }
 
 class HelpOverlay extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     onClose = () => {
         this.props.toggleHelpState();
@@ -213,7 +206,7 @@ class HelpOverlay extends Component {
                     </span>
                 </div>
 
-                <img className="shake-icon" style={{ display: guideId !== GUIDE.BOARD ? "none" : "block",left: guidePosition.left+10, top: guidePosition.top+10 }} src={shakeImg} />
+                <img className="shake-icon" style={{ display: guideId !== GUIDE.BOARD ? "none" : "block",left: guidePosition.left+10, top: guidePosition.top+10 }} src={shakeImg} alt={Localization.getLocalizedString().guideStepShakeImageTitle} />
             </div>
         );
     }

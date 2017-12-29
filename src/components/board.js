@@ -34,6 +34,7 @@ class Board extends Component {
         if (t === 0) {
             return b;
         }
+        // eslint-disable-next-line no-cond-assign
         if ((t /= d) === 1) {
             return b + c;
         }
