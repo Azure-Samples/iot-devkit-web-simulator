@@ -6,6 +6,7 @@ import * as GUIDE from '../constants/guide';
 const mapStateToProps = (state) => ({
     data: state.project.get('codeInEditor'),
     language: state.project.get('codeLanguage'),
+    uniqueId: state.project.get('codeUniqueId'),
     highlight: state.main.get('guideId') === GUIDE.EDITOR,
 });
 

@@ -11,7 +11,7 @@ const getCodeInFirstFile = (project) => {
     // eslint-disable-next-line no-unused-vars
     for (let [k, v] of project.get('files')) {
         if (v.get('type') === 'file') {
-            return [v.get('data'), v.get('format')];
+            return [v.get('data'), v.get('format'), v.get('id')];
         }
     }
 };
@@ -20,10 +20,12 @@ const allProjects = getAllProjects();
 const initProject = allProjects.get('ShakeShake');
 let codeInEditor;
 let codeLanguage;
-[codeInEditor, codeLanguage] = getCodeInFirstFile(initProject);
+let codeUniqueId;
+[codeInEditor, codeLanguage, codeUniqueId] = getCodeInFirstFile(initProject);
 const initialState = Map({
     codeInEditor,
     codeLanguage,
+    codeUniqueId,
     currentProject: initProject,
     projects: allProjects,
 });
@@ -34,6 +36,7 @@ const project = (state = initialState, action) => {
         return state.merge(Map({
             codeInEditor: file.get('data'),
             codeLanguage: file.get('format'),
+            codeUniqueId: file.get('id'),
         }));
     } else if (action.type === SELECT_PROJECT) {
         let currentProject = state.getIn(['projects', action.data]);
@@ -43,11 +46,13 @@ const project = (state = initialState, action) => {
         }
         let codeInEditor;
         let codeLanguage;
-        [codeInEditor, codeLanguage] = getCodeInFirstFile(currentProject);
+        let codeUniqueId;
+        [codeInEditor, codeLanguage, codeUniqueId] = getCodeInFirstFile(currentProject);
         return state.merge(Map({
             currentProject,
             codeInEditor,
             codeLanguage,
+            codeUniqueId,
         }));
     } else if (action.type === SET_PROJECT_CONFIG) {
         let currentProject = state.get('currentProject');

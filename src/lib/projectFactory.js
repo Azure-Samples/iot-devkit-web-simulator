@@ -1,6 +1,8 @@
 import { Map } from 'immutable';
 import * as CONSTANTS from '../constants/localStorageKeys';
 
+const createHash = () => Math.random().toString(36).substring(7);
+
 export const getAllProjects = () => {
 	return Map({
 		GetStarted: Map({
@@ -11,31 +13,37 @@ export const getAllProjects = () => {
             }),
 			files: Map({
 				"GetStarted.ino": Map({
+					id: createHash(),
 					type: "file",
 					format: "cpp",
 					data: require('../data/GetStarted/GetStarted.ino'),
 				}),
 				"iothub_client_sample_mqtt.h": Map({
+					id: createHash(),
 					type: "file",
 					format: "cpp",
 					data: require('../data/GetStarted/iothub_client_sample_mqtt.h'),
 				}),
 				"iothub_client_sample_mqtt.cpp": Map({
+					id: createHash(),
 					type: "file",
 					format: "cpp",
 					data: require('../data/GetStarted/iothub_client_sample_mqtt.cpp'),
 				}),
 				"utility.h": Map({
+					id: createHash(),
 					type: "file",
 					format: "cpp",
 					data: require('../data/GetStarted/utility.h'),
 				}),
 				"utility.cpp": Map({
+					id: createHash(),
 					type: "file",
 					format: "cpp",
 					data: require('../data/GetStarted/utility.cpp'),
 				}),
 				"config.h": Map({
+					id: createHash(),
 					type: "file",
 					format: "cpp",
 					data: require('../data/GetStarted/config.h'),
@@ -55,16 +63,19 @@ export const getAllProjects = () => {
 					type: "directory",
 					data: Map({
 						"function.json": Map({
+							id: createHash(),
 							type: "file",
 							format: "json",
 							data: require('../data/ShakeShake/azureFunction/function.json'),
 						}),
 						"run.csx": Map({
+							id: createHash(),
 							type: "file",
 							format: "csharp",
 							data: require('../data/ShakeShake/azureFunction/run.csx'),
 						}),
 						"project.json": Map({
+							id: createHash(),
 							type: "file",
 							format: "json",
 							data: require('../data/ShakeShake/azureFunction/project.json'),
@@ -72,16 +83,19 @@ export const getAllProjects = () => {
 					})
 				}),
 				"ShakeShake.ino": Map({
+					id: createHash(),
 					type: "file",
 					format: "cpp",
                     data: localStorage.getItem(CONSTANTS.SHAKESHAKE_TOPIC) ? require('../data/ShakeShake/ShakeShake.ino').replace(/("{\\"topic\\":\\")[^\\]*(\\"}";)/, '$1' + localStorage.getItem(CONSTANTS.SHAKESHAKE_TOPIC) + '$2') : require('../data/ShakeShake/ShakeShake.ino'),
 				}),
 				"ShakeUI.h": Map({
+					id: createHash(),
 					type: "file",
 					format: "cpp",
 					data: require('../data/ShakeShake/ShakeUI.h'),
 				}),
 				"ShakeUI.cpp": Map({
+					id: createHash(),
 					type: "file",
 					format: "cpp",
 					data: require('../data/ShakeShake/ShakeUI.cpp'),
