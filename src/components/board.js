@@ -156,7 +156,7 @@ class Board extends Component {
     }
 
     componentWillUnmount() {
-        window.addEventListener("resize", this.onResize);
+        window.removeEventListener("resize", this.onResize);
     }
 
     render() {

@@ -11,14 +11,14 @@ class ControlBar extends Component {
             top, left, right, bottom, width, height, dotX, dotY,
         });
     }
-    
+
     componentDidMount() {
         this.reportPosition();
         window.addEventListener("resize", this.onResize);
     }
 
     componentWillUnmount() {
-        window.addEventListener("resize", this.onResize);
+        window.removeEventListener("resize", this.onResize);
     }
 
     onResize = () => {
