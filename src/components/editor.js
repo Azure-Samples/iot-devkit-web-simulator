@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import Script from 'react-load-script';
+import LoadingComponent from './items/loading';
 
 import '../common.scss'
 
 class Editor extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            loading: true,
-        }
-    }
+
+    editorContainer = null;
+
+    state = {
+        loading: true,
+    };
 
     reportPosition = () => {
-        let { top, left, right, bottom, width, height } = this.refs.editor.getBoundingClientRect();
+        let { top, left, right, bottom, width, height } = this.editorContainer.getBoundingClientRect();
         let dotY = -100;
         let dotX = -100;
         this.props.setComponentSize({
@@ -22,7 +23,7 @@ class Editor extends Component {
 
     editorDidMount = () => {
         window.require(['vs/editor/editor.main'], () => {
-            this.editor = window.monaco.editor.create(document.getElementById('editor-container'), {
+            this.editor = window.monaco.editor.create(this.editorContainer, {
                 value: this.props.data,
                 language: this.props.language,
                 readOnly: true,
@@ -58,24 +59,14 @@ class Editor extends Component {
     }
 
     render() {
-        let loadComponent = <div className="loading">
-            <div className="spinner-label" > Loading editor </div>
-            <div className="spinner">
-                <div className="rect1"></div>
-                <div className="rect2"></div>
-                <div className="rect3"></div>
-                <div className="rect4"></div>
-                <div className="rect5"></div>
-            </div>
-        </div>;
-        let editorComponent = <div ref="editor" id="editor-container" className={`editor-container ${this.props.highlight && 'highlight'}`} >
-            {this.state.loading && loadComponent}
+        return <div ref={(ref) => this.editorContainer = ref}
+            className={`editor-container ${this.props.highlight && 'highlight'}`} >
+            {this.state.loading && <LoadingComponent />}
             <Script
                 url="vs/loader.js"
                 onLoad={this.editorDidMount}
             />
         </div>;
-        return (editorComponent);
     }
 }
 
