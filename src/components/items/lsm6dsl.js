@@ -1,5 +1,5 @@
 import React from 'react';
-import { Rect, Text, Group } from 'react-konva';
+import { Group } from 'react-konva';
 import { Map } from 'immutable';
 
 class LSM6DSL extends React.Component {

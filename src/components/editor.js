@@ -35,7 +35,7 @@ class Editor extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.data !== this.props.data || prevProps.language !== this.props.language && this.editor) {
+        if ((prevProps.data !== this.props.data || prevProps.language !== this.props.language) && this.editor) {
             this.editor.setValue(this.props.data);
             this.editor.updateOptions({
                 language: this.props.language,

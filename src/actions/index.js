@@ -1,5 +1,4 @@
 import * as types from '../constants/actionTypes';
-import {dispatch} from 'redux';
 // board
 export const switchBoard = (dispatch, on) => {
     dispatch({

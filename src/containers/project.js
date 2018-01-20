@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import Project from '../components/project';
 import { setEditorPath, selectProject, setProjectConfig, switchGuide, setComponentSize } from '../actions';
-import { List } from 'immutable';
 import * as GUIDE from '../constants/guide';
 
 const mapStateToProps = (state) => ({

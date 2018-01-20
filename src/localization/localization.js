@@ -42,6 +42,8 @@ Localization.localizedStringList = {
         guideStepRunDetail: "Click the Run button to deploy and start the application on your DevKit.",
         guideStepBoardTitle: "Have fun with DevKit!",
         guideStepBoardDetail: "The OLED screen turns on and you can see the real-time status of the DevKit. Click button A to start your shake. Click button B to scroll down the message. Click Reset button to reset the DevKit. Click top-right of this page to quit the wizard.",
+        guideStepBoardImageTitle: "",
+        guideStepShakeImageTitle: "",
     }
 };
 

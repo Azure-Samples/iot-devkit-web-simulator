@@ -191,7 +191,6 @@ class Project extends Component {
     csFocus = () => {
         {
             let { top, left, right, bottom, width, height } = this.refs.configLocal.getBoundingClientRect();
-            let csInput = this.connectionStringInput.getBoundingClientRect();
             let dotX = -100;
             let dotY = -100;
             this.props.setConfigLocalComponentSize({
@@ -239,6 +238,7 @@ class Project extends Component {
             deployItem = <div ref="configCloud" className={`configure-deploy-link`}><a onClick={this.deployClick} target="_blank" className={`${this.props.highlightConfigCloud && 'highlight'}`} href={this.props.project.get('deployLink')} ><i className="fa fa-cloud-upload" aria-hidden="true"></i>{Localization.getLocalizedString().deployButton}</a></div>
         }
         let configureItems = [];
+        // eslint-disable-next-line no-unused-vars
         for (let [k, v] of this.props.project.get('config')) {
             configureItems.push(
                 <div key={k} className="configure-item" >

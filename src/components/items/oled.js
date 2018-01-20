@@ -1,6 +1,5 @@
 import React from 'react';
-import { Rect, Text, Group, Shape } from 'react-konva';
-import { Map, is } from 'immutable';
+import { Shape } from 'react-konva';
 const XX = 128;
 const YY = 64;
 const font = [[0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
@@ -174,7 +173,7 @@ class OLED extends React.Component {
 
         var c = 0;
         for (var i = 0; i < str.length; i++) {
-            if (str[i] === '\n' || c >= 16 && wrap) {
+            if ((str[i] === '\n' || c >= 16) && wrap) {
                 line++;
                 this._clearRect(0, line * YY / 4, XX, (line + 1) * YY / 4);
                 c = 0;
