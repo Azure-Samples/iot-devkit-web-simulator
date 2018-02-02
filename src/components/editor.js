@@ -36,10 +36,27 @@ class Editor extends Component {
 
     componentDidUpdate(prevProps) {
         if ((prevProps.data !== this.props.data || prevProps.language !== this.props.language) && this.editor) {
+            // store editor focus state
+            const hasFocus = this.editor.isFocused();
+            // save editor UI state
+            const currentEditorState = this.editor.saveViewState();
+            sessionStorage.setItem(prevProps.uniqueId, JSON.stringify(currentEditorState));
+            // reconfigure editor
             this.editor.setValue(this.props.data);
             this.editor.updateOptions({
                 language: this.props.language,
             });
+            // restore editor UI state for current model (if already saved)
+            const oldEditorState = sessionStorage.getItem(this.props.uniqueId);
+            if(oldEditorState) {
+                this.editor.restoreViewState(JSON.parse(oldEditorState));
+            } else {
+                this.editor.setScrollPosition({scrollTop: 0});
+            }
+            // restore focus
+            if(hasFocus) {
+                this.editor.focus();
+            }
         }
     }
 
