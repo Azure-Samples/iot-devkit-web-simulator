@@ -12,8 +12,7 @@ const googleAnalticsKey = 'UA-98097460-4';
 const userProperties = {
     project: getAppName(),
     userId: getUserId(),
-    version: getAppVersion(),
-    page: location
+    version: getAppVersion()
 };
 
 AppInsights.downloadAndSetup({ instrumentationKey: intrumentKey });
