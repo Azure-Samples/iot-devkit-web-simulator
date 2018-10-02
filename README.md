@@ -1,11 +1,11 @@
 # MXChip IoT DevKit Web Simulator
 A browser-based simulator for you to try [MXChip IoT DevKit](https://microsoft.github.io/azure-iot-developer-kit/).
 
-Click to visit **[Demo page](https://aka.ms/iot-devkit-simulator)** 
+Click to visit **[Demo page](https://aka.ms/iot-devkit-simulator)**
 
 [Buy a real DevKit](https://aka.ms/iot-devkit-purchase) to develop IoT app with Microsoft Azure and Visual Studio Code.
 
-## Project - IoT Hub Get Started 
+## Project - IoT Hub Get Started
 Under Construction...
 
 ## Project - Shake, Shake for a Tweet
@@ -26,7 +26,7 @@ After you successfully sign in, you can see the ARM custom deployment page. This
 - **Resource Group**: Create a resource group to host the IoT hub or use an existing one. For more information, see [Use resource groups to manage your Azure resources](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-portal).
 - **Location**: Select the closest location to you where the IoT hub is created.
 - **IoT Hub Name**: Enter the name of your IoT hub. If the name you enter is valid, a green check mark appears.
- 
+
 Agree the terms and conditions stated in this page and click **Purchase** to start the deployment. It might take about three minutes to finish the deployment. You can track the progress by clicking the notification button.
 
 ![ARM-deployment-success](img/arm-deploy-success.png)
@@ -56,9 +56,9 @@ After the device is created, open the device in the Device Explorer pane. Copy t
 
 Paste the **primary key of the connection string** into the configuration area and click the save icon.
 
-![Configure-DevKit](img/configure-devkit.png)'
+![Configure-DevKit](img/configure-devkit.png)
 
-You can also update the #hashtag, the default value is song. Don't forget to click the sa
+You can also update the #hashtag, the default value is song. Don't forget to click the save icon.
 
 ### Run this app and shake your DevKit with your mouse.
 
